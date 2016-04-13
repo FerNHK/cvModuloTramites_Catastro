@@ -1,0 +1,15 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="cvModuloTramites_Catastro.SiteMaster" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+<title>Modulo de Tramites | <%: Page.Title %></title> 
+<link rel="shortcut icon" href="Styles/assets/ico/favicon.png"> 
+    
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+     <asp:ContentPlaceHolder ID="MainContent" runat="server"/>        
+</body>
+</html>
