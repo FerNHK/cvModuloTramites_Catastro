@@ -821,19 +821,15 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 consultaClave.cConsultarUltimoFolio();
                 consultaClave.cConsultarUltimoTramite();
                 var drTotalCopias = "";
-
-
-                /***Asignar valores***/
+                  /***Asignar valores***/
                 idTramite = Convert.ToInt32(consultaClave.getUltimoID()) + 1;
                 int folio = Convert.ToInt32(consultaClave.getUltimoFolio()) + 1;
                 /*Clave Catastral y datos del usuario**/
                 string cat = txtClaveCatastral.Text;
-
                 string n1 = txtNombre_uno.Text;
                 string n2 = txtNombre_dos.Text;
                 string ap = txtApellidoPaterno.Text;
                 string am = txtApellidoMaterno.Text;
-
                 String comentarios = txtObservacionesData.Text;
                 bool rdc = this.chkRenovacion.Checked;
                 bool cmc = this.chkCertificadoM.Checked;
@@ -893,19 +889,14 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 consultaClave.setIdTramite(idTramite);
                 consultaClave.setNuevoFolio(folio);
                 consultaClave.setEnvioId(idEn);
-
                 consultaClave.setClvCatastral(cat);
-
                 consultaClave.setNombre_uno(n1);
                 consultaClave.setNombre_dos(n2);
                 consultaClave.setApePaterno(ap);
                 consultaClave.setApeMaterno(am);
-
                 consultaClave.setComentarios(comentarios);
-
                 consultaClave.setArchivoInser(archivo);
                 consultaClave.setStatusInser(status);
-
                 consultaClave.setRenovacion(rdc);
                 consultaClave.setCopiasCer(cpc);
                 consultaClave.setCerMedidas(cmc);
@@ -924,62 +915,45 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 {
 
                         llenaDatosTramites_Denominación();
-                        this.Page.Title = "Modulo de Tramites | Principal";
-                        //Llenar TRDETALLE
-                        //Limpieza de Controles
-                        total = 0;
-                        duplicados = 0;
-                        tramitePrecios = 0;
-                        precioEnvio = 0;
-                        TotalPrecio = 0;
+                        clearControls();
                         alertNumero = 4;
-                    ScriptManager.RegisterStartupScript(this, GetType(),
-                     "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
+                        ScriptManager.RegisterStartupScript(this, GetType(),
+                         "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
                         ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
-                                                          $('#MainContent_tipeError').addClass('modal-header-success'); 
-                                                          $('#MainContent_mensajeTitulo').text('Exito'); $('#MainContent_mensajeUsuario').addClass('textalerta'); " +  "$('#MainContent_mensajeCuerpo').text('Usted ha creado un nuevo tramite');});", true);
-
+                                                              $('#MainContent_tipeError').addClass('modal-header-success'); 
+                                                              $('#MainContent_mensajeTitulo').text('Exito'); $('#MainContent_mensajeUsuario').addClass('textalerta'); " +  
+                                                              "$('#MainContent_mensajeCuerpo').text('Usted ha creado un nuevo tramite');});", true);
                         ScriptManager.RegisterStartupScript(this, GetType(),
                               "alert1", "$('#alert').modal('show');", true); 
-                  
-
                 }
                 else
                 {
-                    
+                        llenaDatosTramites_Denominación();
+                        clearControls();
                         alertNumero = 4;
-                        //Limpieza de Controles
-                        total = 0;
-                        duplicados = 0;
-                        tramitePrecios = 0;
-                        precioEnvio = 0;
-                        TotalPrecio = 0;
-                        this.Page.Title = "Modulo de Tramites | Principal";
+                        
                         ScriptManager.RegisterStartupScript(this, GetType(),
                         "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
 
                         ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
                                                           $('#MainContent_tipeError').addClass('modal-header-danger'); 
-                                                          $('#MainContent_mensajeTitulo').text('Error');$('#MainContent_mensajeCuerpo').text('Ha surgido un error crear su tramite  intentelo mas tarde');});", true);
+                                                          $('#MainContent_mensajeTitulo').text('Error');
+                                                          $('#MainContent_mensajeCuerpo').text('Ha surgido un error crear su tramite  intentelo mas tarde');});", true);
 
                         ScriptManager.RegisterStartupScript(this, GetType(),
-                              "alert1", "$('#alert').modal('show');", true);
-                  
+                              "alert1", "$('#alert').modal('show');", true);                
                 }
-
             }
             else
             {
+                llenaDatosTramites_Denominación();
                 alertNumero = 4;
-                this.Page.Title = "Modulo de Tramites | Principal";
+                clearControls();
                 ScriptManager.RegisterStartupScript(this, GetType(),
                  "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
-
-
                 ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
                                                           $('#MainContent_tipeError').addClass('modal-header-warning'); 
                                                           $('#MainContent_mensajeTitulo').text('Advertencia');$('#MainContent_mensajeCuerpo').text('Verifique al menos un tramite esta seleccionado');});", true);
-
                 ScriptManager.RegisterStartupScript(this, GetType(),
                       "alert1", "$('#alert').modal('show');", true);  
             }
@@ -1198,6 +1172,31 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 return i;
             }
         }
+
+        public void clearControls()
+        {
+            this.Page.Title = "Modulo de Tramites | Principal";
+            this.chkRenovacion.Checked = false;
+            this.chkCertificadoM.Checked = false;
+            this.chkNumOficial.Checked = false;
+            this.chkRegistroC.Checked = false;
+            this.chkCopiasCer.Checked = false;
+            this.chkConstanciaUnica.Checked = false;
+            this.chkCroquisLoc.Checked = false;
+            this.chkNopropiedad.Checked = false;
+            this.chkMetodoEnvio.Checked = false;
+
+            total = 0;
+            duplicados = 0;
+            tramitePrecios = 0;
+            precioEnvio = 0;
+            TotalPrecio = 0;
+            lblPrecio.Text = "00";
+            drMetodoEnvioS.Items.Clear();
+            Envio.Text = "00";
+            //Limpieza de Controles
+     
+        }
         #endregion
         #region Actualizaciones
         protected void btnActualizarArchivo_Click(object sender, EventArgs e)
@@ -1399,7 +1398,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
         }
 
         //seleccion Drlist
-        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        protected void drMetodoEnvioS_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Page.Title = "Modulo de Tramites | Principal";
            var da = drMetodoEnvioS.SelectedItem.Value.ToString();
