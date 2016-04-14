@@ -639,12 +639,19 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                         regresaReport();
                         consultaClave.setFolio("");
                         alertNumero = 4;
-                         stream = new BinaryReader(crystalReport.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat));
+                        crystalReport.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, true, "Crystal"); 
+                        /*stream = new BinaryReader(crystalReport.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat));
                          Response.AddHeader("content-disposition", "attachment; filename=" + "Acuse de Recibido.pdf");
                          Response.AddHeader("content-length", stream.BaseStream.Length.ToString());
                          Response.BinaryWrite(stream.ReadBytes(Convert.ToInt32(stream.BaseStream.Length)));
                          Response.Flush();
-                         Response.End();
+                         Response.End();*/
+                         ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                                                          $('#MainContent_tipeError').addClass('modal-header-info'); 
+                                                          $('#MainContent_mensajeTitulo').text('Exito');$('#MainContent_mensajeCuerpo').text('A causa de un error no se ha podido generar el acuse de su tramite. Intentelo mas tarde.');});", true);
+
+                         ScriptManager.RegisterStartupScript(this, GetType(),
+                               "alert1", "$('#alert').modal('show');", true);
                         
                     }
                     else
@@ -660,7 +667,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 
                     }
                 }
-                catch (Exception ex)
+                catch (CrystalDecisions.CrystalReports.Engine.InvalidArgumentException ex)
                 {
                     alertNumero = 3;
 
@@ -691,47 +698,90 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             cnp = tbReport.Rows[0]["constanciaNopropiedad"].ToString();
 
             //valores que se puden obtener directamente
-            crystalReport.Load(Server.MapPath("Reportes/AcuseTramite.rpt"), CrystalDecisions.Shared.OpenReportMethod.OpenReportByTempCopy);
-            crystalReport.SetParameterValue("@ClaveCatastral_bd", tbReport.Rows[0]["ClaveCatastral"].ToString());
-            crystalReport.SetParameterValue("@CuentaPredial_bd",  tbReport.Rows[0]["Cuenta"].ToString());
-            crystalReport.SetParameterValue("@RazonSocial_bd",    tbReport.Rows[0]["RazoSoc"].ToString());
-            crystalReport.SetParameterValue("@RFC_bd",            tbReport.Rows[0]["RFC"].ToString());
+            crystalReport.Load(Server.MapPath("Reportes/Acuse.rpt"));
+            crystalReport.SetParameterValue("ClaveCatastral_bd", tbReport.Rows[0]["ClaveCatastral"].ToString());
+            crystalReport.SetParameterValue("CuentaPredial_bd", tbReport.Rows[0]["Cuenta"].ToString());
+            crystalReport.SetParameterValue("RazonSocial_bd",    tbReport.Rows[0]["RazoSoc"].ToString());
+            crystalReport.SetParameterValue("RFC_bd",            tbReport.Rows[0]["RFC"].ToString());
 
-            crystalReport.SetParameterValue("@nombreUno_bd", tbReport.Rows[0]["Nombre1"].ToString());
-            crystalReport.SetParameterValue("@nombreDos_bd", tbReport.Rows[0]["Nombre2"].ToString());
-            crystalReport.SetParameterValue("@apPaterno_bd", tbReport.Rows[0]["ApellidoP"].ToString());
-            crystalReport.SetParameterValue("@apMaterno_bd", tbReport.Rows[0]["ApellidoM"].ToString());
+            crystalReport.SetParameterValue("nombreUno_bd", tbReport.Rows[0]["Nombre1"].ToString());
+            crystalReport.SetParameterValue("nombreDos_bd", tbReport.Rows[0]["Nombre2"].ToString());
+            crystalReport.SetParameterValue("apPaterno_bd", tbReport.Rows[0]["ApellidoP"].ToString());
+            crystalReport.SetParameterValue("apMaterno_bd", tbReport.Rows[0]["ApellidoM"].ToString());
 
-            crystalReport.SetParameterValue("@callePropietario_bd",   tbReport.Rows[0]["CallePropietario"].ToString());
-            crystalReport.SetParameterValue("@coloniaPropietario_bd", tbReport.Rows[0]["ColoniaPropietario"].ToString());
-            crystalReport.SetParameterValue("@localidadPropietario",  tbReport.Rows[0]["CiudadPropietario"].ToString());
-            crystalReport.SetParameterValue("@telefonoPropietario_bd",tbReport.Rows[0]["NumPropietario"].ToString());
+            crystalReport.SetParameterValue("callePropietario_bd",   tbReport.Rows[0]["CallePropietario"].ToString());
+            crystalReport.SetParameterValue("coloniaPropietario_bd", tbReport.Rows[0]["ColoniaPropietario"].ToString());
+            crystalReport.SetParameterValue("localidadPropietario",  tbReport.Rows[0]["CiudadPropietario"].ToString());
+            crystalReport.SetParameterValue("telefonoPropietario_bd",tbReport.Rows[0]["NumPropietario"].ToString());
 
-            crystalReport.SetParameterValue("@callePredio_bd",      tbReport.Rows[0]["CallePredio"].ToString());
-            crystalReport.SetParameterValue("@localidadPredio_bd",  tbReport.Rows[0]["ColoniaPredio"].ToString());
-            crystalReport.SetParameterValue("@referenciasPredio_bd",tbReport.Rows[0]["CallesPredio"].ToString());
-           
-            if(rdc.Equals("True"))
+            crystalReport.SetParameterValue("callePredio_bd",      tbReport.Rows[0]["CallePredio"].ToString());
+            crystalReport.SetParameterValue("localidadPredio_bd",  tbReport.Rows[0]["ColoniaPredio"].ToString());
+            crystalReport.SetParameterValue("referenciasPredio_bd",tbReport.Rows[0]["CallesPredio"].ToString());
+            if (rdc.Equals("True"))
             {
-              
-            //  crystalReport.SetCssClass( , "glyphicon glyphicon-ok");
-            //  crystalReport.SetParameterValue("@rdc", )
+                crystalReport.SetParameterValue("rdp_bd", "X");
             }
-          /**  crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-          **Checks Faltantes**** 
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )
-            crystalReport.SetParameterValue("@CuentaPredial_bd", )*/
+            else
+            {
+                crystalReport.SetParameterValue("rdp_bd", "  ");
+            }
+            if(cmc.Equals("True"))
+            {
+                crystalReport.SetParameterValue("cmc_bd","X");
+            }else
+            {
+                crystalReport.SetParameterValue("cmc_bd"," ");
+            }
+           if (cno.Equals("True"))
+            {
+                crystalReport.SetParameterValue("cno_bd","X" ); 
+            }
+           else
+            {
+              crystalReport.SetParameterValue("cno_bd"," " );   
+            }
+            if (cdr.Equals("True"))
+            {
+               crystalReport.SetParameterValue("cdr_bd", "X");                
+            } 
+            else
+            {
+               crystalReport.SetParameterValue("cdr_bd", " ");      
+            }
+            //segunda parte de denomiancion
+            if (cpc.Equals("True"))
+            {
+               crystalReport.SetParameterValue("csp_bd","X" );
+            }
+            else
+            {
+               crystalReport.SetParameterValue("csp_bd", " ");
+            }
+            if (cup.Equals("True"))
+            {
+               crystalReport.SetParameterValue("cup_bd","X" );
+            } 
+            else
+            {
+               crystalReport.SetParameterValue("cup_bd", " " );
+            }
+            if (crl.Equals("True"))
+            {
+               crystalReport.SetParameterValue("cdl_bd", "X");
+            } 
+            else
+            {
+               crystalReport.SetParameterValue("cdl_bd"," ");
+            }
+            if (cnp.Equals("True"))
+            {
+               crystalReport.SetParameterValue("cnp_bd", "X");
+            } 
+            else
+            { 
+                crystalReport.SetParameterValue("cnp_bd", " ");
+            }
+            crystalReport.SetParameterValue("observaciones_bd", tbReport.Rows[0]["Observaciones"].ToString());
         }
         #endregion
         #region Nuevo Tramite     
