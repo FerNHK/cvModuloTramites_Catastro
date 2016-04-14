@@ -677,72 +677,10 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
         }
         public void regresaReport()
         {
-            char[] delimiterChars = {'Y'};
-            string textoOriginal = "", rdc="",cmc="",cno="",cdr="",
-                                       cpc = "", cup = "", crl = "", cnp = "" ;
-            string[] division;
-
-           
+             string  rdc="",cmc="",cno="",cdr="",
+                     cpc = "", cup = "", crl = "", cnp = "" ;
             tbReport = consultaClave.getdatosRe();
-            crystalReport.Load(Server.MapPath("Reportes/AcuseTramite.rpt"), CrystalDecisions.Shared.OpenReportMethod.OpenReportByTempCopy);
-            TextObject ClaveCatastral = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject CuentaP = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["CuentaP"];
-            TextObject razonSoc = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["RazonS"];
-            TextObject rfc = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["RF"];
-            TextObject nom1 = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Nom1"];
-            TextObject nom2 = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Nom2"];
-            TextObject ap = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["aP"];
-            TextObject am = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["aM"];
-           
-            TextObject calleP = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["CallePropietario"];
-            TextObject coloniaP = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ColoniaPropietario"];
-            TextObject localidadP = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["LocalidadPredio"];
-            TextObject Tel = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["TelefonoW"];
-
-            TextObject calleTerreno = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["CallePredio"];
-            TextObject localidadTerreno = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["LocalidadPredio"];
-            TextObject referencia1Terreno = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Calle1Predio"];
-            TextObject referencia2terreno = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Calle2Predio"];
-
-            //TextObject RegistroPredio = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject ReCedula = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["RevSolicitado"];
-            //TextObject SubPredios = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            // TextObject FusionPredio = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject CerMedidasYCol = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["MedidasCol"];
-            TextObject ConstNumeroOficial = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["NumeroOficial"];
-            TextObject ConstRegistro = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ConstRegistro"];
-            
-            TextObject CopiasCer = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["CopiasCer"];
-            TextObject ConstanciaUnicaProp = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["UnicaProp"];
-            TextObject ConstanciaNoProp = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["NoPropiedad"];
-            //TextObject ExpedDocumentos = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            //TextObject SolicitudCopiaPlanos = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject Croquiz = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Croquiz"];
-            //TextObject OTro = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject Observaciones = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Observaciones"];
-
-            ClaveCatastral.Text = tbReport.Rows[0]["ClaveCatastral"].ToString();
-            CuentaP.Text = tbReport.Rows[0]["Cuenta"].ToString();
-            razonSoc.Text = tbReport.Rows[0]["RazoSoc"].ToString();
-            rfc.Text = tbReport.Rows[0]["RFC"].ToString();
-            nom1.Text = tbReport.Rows[0]["Nombre1"].ToString();
-            nom2.Text = tbReport.Rows[0]["Nombre2"].ToString();
-            ap.Text = tbReport.Rows[0]["ApellidoP"].ToString();
-            am.Text = tbReport.Rows[0]["ApellidoM"].ToString();
-
-            calleP.Text = tbReport.Rows[0]["CallePropietario"].ToString();
-            coloniaP.Text = tbReport.Rows[0]["ColoniaPropietario"].ToString();
-            localidadP.Text = tbReport.Rows[0]["CiudadPropietario"].ToString();
-            localidadP.Text = tbReport.Rows[0]["CiudadPropietario"].ToString();
-            Tel.Text = tbReport.Rows[0]["NumPropietario"].ToString();
-
-            calleTerreno.Text = tbReport.Rows[0]["CallePredio"].ToString();
-            localidadTerreno.Text = tbReport.Rows[0]["ColoniaPredio"].ToString();
-            textoOriginal = tbReport.Rows[0]["CallesPredio"].ToString();
-            division = textoOriginal.Split(delimiterChars);
-            referencia1Terreno.Text = division[0].ToString();
-            referencia2terreno.Text = division[1].ToString();
-
+            //valores Iniciados para evaluacion
             rdc = tbReport.Rows[0]["RenovacionCedula"].ToString();
             cmc = tbReport.Rows[0]["CerMedidasColindancia"].ToString();
             cno=tbReport.Rows[0]["ConstanciaNumero"].ToString();
@@ -751,65 +689,49 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             cup = tbReport.Rows[0]["constanciapropiedad"].ToString();
             crl = tbReport.Rows[0]["Croquis"].ToString();
             cnp = tbReport.Rows[0]["constanciaNopropiedad"].ToString();
-            if (rdc.Equals("True"))
-            {
-                ReCedula.Text = "Solicitado";
-            }
-            else
-            {
-                ReCedula.Text = "----------";
-            } if (cmc.Equals("True"))
-            {
-                 CerMedidasYCol.Text = "Solicitado";
-            } else
-            {
-                CerMedidasYCol.Text = "----------";
-            }
-            if (cno.Equals("True"))
-            {
-                 ConstNumeroOficial.Text = "Solicitado";
-            } else
-            {
-                ConstNumeroOficial.Text = "----------";
-            }
-            if (cdr.Equals("True"))
-            {
-                 ConstRegistro.Text = "Solicitado";
-            } else
-            {
-                ConstRegistro.Text = "----------";
-            }
-            //segunda parte de denomiancion
-            if (cpc.Equals("True"))
-            {
-                 CopiasCer.Text = "Solicitado";
-            } else
-            {
-                CopiasCer.Text = "----------";
-            }
-            if (cup.Equals("True"))
-            {
-                 ConstanciaUnicaProp.Text = "Solicitado";
-            } else
-            {
-                ConstanciaUnicaProp.Text = "----------";
-            }
-            if (crl.Equals("True"))
-            {
-                 Croquiz.Text = "Solicitado";
-            } else
-            {
-                Croquiz.Text = "----------";
-            }
-            if (cnp.Equals("True"))
-            {
-                 ConstanciaNoProp.Text = "Solicitado";
-            } else
-            {
-                ConstanciaNoProp.Text = "----------";
-            }
-            Observaciones.Text = tbReport.Rows[0]["Observaciones"].ToString();
+
+            //valores que se puden obtener directamente
+            crystalReport.Load(Server.MapPath("Reportes/AcuseTramite.rpt"), CrystalDecisions.Shared.OpenReportMethod.OpenReportByTempCopy);
+            crystalReport.SetParameterValue("@ClaveCatastral_bd", tbReport.Rows[0]["ClaveCatastral"].ToString());
+            crystalReport.SetParameterValue("@CuentaPredial_bd",  tbReport.Rows[0]["Cuenta"].ToString());
+            crystalReport.SetParameterValue("@RazonSocial_bd",    tbReport.Rows[0]["RazoSoc"].ToString());
+            crystalReport.SetParameterValue("@RFC_bd",            tbReport.Rows[0]["RFC"].ToString());
+
+            crystalReport.SetParameterValue("@nombreUno_bd", tbReport.Rows[0]["Nombre1"].ToString());
+            crystalReport.SetParameterValue("@nombreDos_bd", tbReport.Rows[0]["Nombre2"].ToString());
+            crystalReport.SetParameterValue("@apPaterno_bd", tbReport.Rows[0]["ApellidoP"].ToString());
+            crystalReport.SetParameterValue("@apMaterno_bd", tbReport.Rows[0]["ApellidoM"].ToString());
+
+            crystalReport.SetParameterValue("@callePropietario_bd",   tbReport.Rows[0]["CallePropietario"].ToString());
+            crystalReport.SetParameterValue("@coloniaPropietario_bd", tbReport.Rows[0]["ColoniaPropietario"].ToString());
+            crystalReport.SetParameterValue("@localidadPropietario",  tbReport.Rows[0]["CiudadPropietario"].ToString());
+            crystalReport.SetParameterValue("@telefonoPropietario_bd",tbReport.Rows[0]["NumPropietario"].ToString());
+
+            crystalReport.SetParameterValue("@callePredio_bd",      tbReport.Rows[0]["CallePredio"].ToString());
+            crystalReport.SetParameterValue("@localidadPredio_bd",  tbReport.Rows[0]["ColoniaPredio"].ToString());
+            crystalReport.SetParameterValue("@referenciasPredio_bd",tbReport.Rows[0]["CallesPredio"].ToString());
            
+            if(rdc.Equals("True"))
+            {
+              
+            //  crystalReport.SetCssClass( , "glyphicon glyphicon-ok");
+            //  crystalReport.SetParameterValue("@rdc", )
+            }
+          /**  crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+          **Checks Faltantes**** 
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )
+            crystalReport.SetParameterValue("@CuentaPredial_bd", )*/
         }
         #endregion
         #region Nuevo Tramite     
