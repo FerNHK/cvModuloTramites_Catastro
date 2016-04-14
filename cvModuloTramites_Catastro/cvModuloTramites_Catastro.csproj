@@ -145,6 +145,12 @@
     <Compile Include="Account\Usuarios\MiCuenta\Principal.aspx.designer.cs">
       <DependentUpon>Principal.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Account\Usuarios\MiCuenta\Reportes\Acuse.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Acuse.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Account\Usuarios\MiCuenta\Reportes\AcuseTramite.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -196,6 +202,10 @@
     <None Include="Styles\assets\fonts\glyphicons-halflings-regular.woff2" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Account\Usuarios\MiCuenta\Reportes\Acuse.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Acuse.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Account\Usuarios\MiCuenta\Reportes\AcuseTramite.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>AcuseTramite.cs</LastGenOutput>
