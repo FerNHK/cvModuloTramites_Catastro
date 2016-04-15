@@ -639,20 +639,11 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                         regresaReport();
                         consultaClave.setFolio("");
                         alertNumero = 4;
-                        crystalReport.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, true, "Crystal"); 
-                        /*stream = new BinaryReader(crystalReport.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat));
-                         Response.AddHeader("content-disposition", "attachment; filename=" + "Acuse de Recibido.pdf");
-                         Response.AddHeader("content-length", stream.BaseStream.Length.ToString());
-                         Response.BinaryWrite(stream.ReadBytes(Convert.ToInt32(stream.BaseStream.Length)));
-                         Response.Flush();
-                         Response.End();*/
-                         ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
-                                                          $('#MainContent_tipeError').addClass('modal-header-info'); 
-                                                          $('#MainContent_mensajeTitulo').text('Exito');$('#MainContent_mensajeCuerpo').text('A causa de un error no se ha podido generar el acuse de su tramite. Intentelo mas tarde.');});", true);
-
-                         ScriptManager.RegisterStartupScript(this, GetType(),
-                               "alert1", "$('#alert').modal('show');", true);
-                        
+                        Response.Buffer = false;
+                        Response.ClearContent();
+                        Response.ClearHeaders();
+                        crystalReport.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, true, "Acuse de recivido");
+                        HttpContext.Current.ApplicationInstance.CompleteRequest();  
                     }
                     else
                     {
