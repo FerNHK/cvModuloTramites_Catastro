@@ -151,12 +151,6 @@
       <DependentUpon>Acuse.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Account\Usuarios\MiCuenta\Reportes\AcuseTramite.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AcuseTramite.rpt</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Account\Usuarios\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -205,10 +199,6 @@
     <EmbeddedResource Include="Account\Usuarios\MiCuenta\Reportes\Acuse.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Acuse.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Account\Usuarios\MiCuenta\Reportes\AcuseTramite.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>AcuseTramite.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
