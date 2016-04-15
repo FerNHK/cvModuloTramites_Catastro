@@ -653,7 +653,7 @@ EnableEventValidation="false" %>
                  <ContentTemplate>
                <asp:DropDownList ID="drMetodoEnvioS" runat="server" Enabled="False" DataTextField="Descripcion" DataValueField="Descripcion" 
                AutoPostBack="True"
-                onselectedindexchanged="DropDownList1_SelectedIndexChanged">
+                onselectedindexchanged="drMetodoEnvioS_SelectedIndexChanged">
                     
                 </asp:DropDownList>
                   <label >Costo de Envio:</label>&nbsp;&nbsp;<label>$</label> <asp:Label ID="Envio" runat="server" Text="00"></asp:Label>&nbsp;&nbsp;<label>MXN</label>
