@@ -639,13 +639,11 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                         regresaReport();
                         consultaClave.setFolio("");
                         alertNumero = 4;
-                         stream = new BinaryReader(crystalReport.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat));
-                         Response.AddHeader("content-disposition", "attachment; filename=" + "Acuse de Recibido.pdf");
-                         Response.AddHeader("content-length", stream.BaseStream.Length.ToString());
-                         Response.BinaryWrite(stream.ReadBytes(Convert.ToInt32(stream.BaseStream.Length)));
-                         Response.Flush();
-                         Response.End();
-                        
+                        Response.Buffer = false;
+                        Response.ClearContent();
+                        Response.ClearHeaders();
+                        crystalReport.ExportToHttpResponse(ExportFormatType.PortableDocFormat, Response, true, "Acuse de recivido");
+                        HttpContext.Current.ApplicationInstance.CompleteRequest();  
                     }
                     else
                     {
@@ -660,7 +658,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 
                     }
                 }
-                catch (Exception ex)
+                catch (CrystalDecisions.CrystalReports.Engine.InvalidArgumentException ex)
                 {
                     alertNumero = 3;
 
@@ -677,72 +675,10 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
         }
         public void regresaReport()
         {
-            char[] delimiterChars = {'Y'};
-            string textoOriginal = "", rdc="",cmc="",cno="",cdr="",
-                                       cpc = "", cup = "", crl = "", cnp = "" ;
-            string[] division;
-
-           
+             string  rdc="",cmc="",cno="",cdr="",
+                     cpc = "", cup = "", crl = "", cnp = "" ;
             tbReport = consultaClave.getdatosRe();
-            crystalReport.Load(Server.MapPath("Reportes/AcuseTramite.rpt"), CrystalDecisions.Shared.OpenReportMethod.OpenReportByTempCopy);
-            TextObject ClaveCatastral = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject CuentaP = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["CuentaP"];
-            TextObject razonSoc = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["RazonS"];
-            TextObject rfc = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["RF"];
-            TextObject nom1 = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Nom1"];
-            TextObject nom2 = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Nom2"];
-            TextObject ap = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["aP"];
-            TextObject am = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["aM"];
-           
-            TextObject calleP = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["CallePropietario"];
-            TextObject coloniaP = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ColoniaPropietario"];
-            TextObject localidadP = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["LocalidadPredio"];
-            TextObject Tel = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["TelefonoW"];
-
-            TextObject calleTerreno = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["CallePredio"];
-            TextObject localidadTerreno = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["LocalidadPredio"];
-            TextObject referencia1Terreno = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Calle1Predio"];
-            TextObject referencia2terreno = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Calle2Predio"];
-
-            //TextObject RegistroPredio = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject ReCedula = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["RevSolicitado"];
-            //TextObject SubPredios = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            // TextObject FusionPredio = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject CerMedidasYCol = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["MedidasCol"];
-            TextObject ConstNumeroOficial = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["NumeroOficial"];
-            TextObject ConstRegistro = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ConstRegistro"];
-            
-            TextObject CopiasCer = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["CopiasCer"];
-            TextObject ConstanciaUnicaProp = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["UnicaProp"];
-            TextObject ConstanciaNoProp = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["NoPropiedad"];
-            //TextObject ExpedDocumentos = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            //TextObject SolicitudCopiaPlanos = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject Croquiz = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Croquiz"];
-            //TextObject OTro = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["ClaveCatastral"];
-            TextObject Observaciones = (TextObject)crystalReport.ReportDefinition.Sections["Section3"].ReportObjects["Observaciones"];
-
-            ClaveCatastral.Text = tbReport.Rows[0]["ClaveCatastral"].ToString();
-            CuentaP.Text = tbReport.Rows[0]["Cuenta"].ToString();
-            razonSoc.Text = tbReport.Rows[0]["RazoSoc"].ToString();
-            rfc.Text = tbReport.Rows[0]["RFC"].ToString();
-            nom1.Text = tbReport.Rows[0]["Nombre1"].ToString();
-            nom2.Text = tbReport.Rows[0]["Nombre2"].ToString();
-            ap.Text = tbReport.Rows[0]["ApellidoP"].ToString();
-            am.Text = tbReport.Rows[0]["ApellidoM"].ToString();
-
-            calleP.Text = tbReport.Rows[0]["CallePropietario"].ToString();
-            coloniaP.Text = tbReport.Rows[0]["ColoniaPropietario"].ToString();
-            localidadP.Text = tbReport.Rows[0]["CiudadPropietario"].ToString();
-            localidadP.Text = tbReport.Rows[0]["CiudadPropietario"].ToString();
-            Tel.Text = tbReport.Rows[0]["NumPropietario"].ToString();
-
-            calleTerreno.Text = tbReport.Rows[0]["CallePredio"].ToString();
-            localidadTerreno.Text = tbReport.Rows[0]["ColoniaPredio"].ToString();
-            textoOriginal = tbReport.Rows[0]["CallesPredio"].ToString();
-            division = textoOriginal.Split(delimiterChars);
-            referencia1Terreno.Text = division[0].ToString();
-            referencia2terreno.Text = division[1].ToString();
-
+            //valores Iniciados para evaluacion
             rdc = tbReport.Rows[0]["RenovacionCedula"].ToString();
             cmc = tbReport.Rows[0]["CerMedidasColindancia"].ToString();
             cno=tbReport.Rows[0]["ConstanciaNumero"].ToString();
@@ -751,65 +687,92 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             cup = tbReport.Rows[0]["constanciapropiedad"].ToString();
             crl = tbReport.Rows[0]["Croquis"].ToString();
             cnp = tbReport.Rows[0]["constanciaNopropiedad"].ToString();
+
+            //valores que se puden obtener directamente
+            crystalReport.Load(Server.MapPath("Reportes/Acuse.rpt"));
+            crystalReport.SetParameterValue("ClaveCatastral_bd", tbReport.Rows[0]["ClaveCatastral"].ToString());
+            crystalReport.SetParameterValue("CuentaPredial_bd", tbReport.Rows[0]["Cuenta"].ToString());
+            crystalReport.SetParameterValue("RazonSocial_bd",    tbReport.Rows[0]["RazoSoc"].ToString());
+            crystalReport.SetParameterValue("RFC_bd",            tbReport.Rows[0]["RFC"].ToString());
+
+            crystalReport.SetParameterValue("nombreUno_bd", tbReport.Rows[0]["Nombre1"].ToString());
+            crystalReport.SetParameterValue("nombreDos_bd", tbReport.Rows[0]["Nombre2"].ToString());
+            crystalReport.SetParameterValue("apPaterno_bd", tbReport.Rows[0]["ApellidoP"].ToString());
+            crystalReport.SetParameterValue("apMaterno_bd", tbReport.Rows[0]["ApellidoM"].ToString());
+
+            crystalReport.SetParameterValue("callePropietario_bd",   tbReport.Rows[0]["CallePropietario"].ToString());
+            crystalReport.SetParameterValue("coloniaPropietario_bd", tbReport.Rows[0]["ColoniaPropietario"].ToString());
+            crystalReport.SetParameterValue("localidadPropietario",  tbReport.Rows[0]["CiudadPropietario"].ToString());
+            crystalReport.SetParameterValue("telefonoPropietario_bd",tbReport.Rows[0]["NumPropietario"].ToString());
+
+            crystalReport.SetParameterValue("callePredio_bd",      tbReport.Rows[0]["CallePredio"].ToString());
+            crystalReport.SetParameterValue("localidadPredio_bd",  tbReport.Rows[0]["ColoniaPredio"].ToString());
+            crystalReport.SetParameterValue("referenciasPredio_bd",tbReport.Rows[0]["CallesPredio"].ToString());
             if (rdc.Equals("True"))
             {
-                ReCedula.Text = "Solicitado";
+                crystalReport.SetParameterValue("rdp_bd", "X");
             }
             else
             {
-                ReCedula.Text = "----------";
-            } if (cmc.Equals("True"))
-            {
-                 CerMedidasYCol.Text = "Solicitado";
-            } else
-            {
-                CerMedidasYCol.Text = "----------";
+                crystalReport.SetParameterValue("rdp_bd", "  ");
             }
-            if (cno.Equals("True"))
+            if(cmc.Equals("True"))
             {
-                 ConstNumeroOficial.Text = "Solicitado";
-            } else
+                crystalReport.SetParameterValue("cmc_bd","X");
+            }else
             {
-                ConstNumeroOficial.Text = "----------";
+                crystalReport.SetParameterValue("cmc_bd"," ");
+            }
+           if (cno.Equals("True"))
+            {
+                crystalReport.SetParameterValue("cno_bd","X" ); 
+            }
+           else
+            {
+              crystalReport.SetParameterValue("cno_bd"," " );   
             }
             if (cdr.Equals("True"))
             {
-                 ConstRegistro.Text = "Solicitado";
-            } else
+               crystalReport.SetParameterValue("cdr_bd", "X");                
+            } 
+            else
             {
-                ConstRegistro.Text = "----------";
+               crystalReport.SetParameterValue("cdr_bd", " ");      
             }
             //segunda parte de denomiancion
             if (cpc.Equals("True"))
             {
-                 CopiasCer.Text = "Solicitado";
-            } else
+               crystalReport.SetParameterValue("csp_bd","X" );
+            }
+            else
             {
-                CopiasCer.Text = "----------";
+               crystalReport.SetParameterValue("csp_bd", " ");
             }
             if (cup.Equals("True"))
             {
-                 ConstanciaUnicaProp.Text = "Solicitado";
-            } else
+               crystalReport.SetParameterValue("cup_bd","X" );
+            } 
+            else
             {
-                ConstanciaUnicaProp.Text = "----------";
+               crystalReport.SetParameterValue("cup_bd", " " );
             }
             if (crl.Equals("True"))
             {
-                 Croquiz.Text = "Solicitado";
-            } else
+               crystalReport.SetParameterValue("cdl_bd", "X");
+            } 
+            else
             {
-                Croquiz.Text = "----------";
+               crystalReport.SetParameterValue("cdl_bd"," ");
             }
             if (cnp.Equals("True"))
             {
-                 ConstanciaNoProp.Text = "Solicitado";
-            } else
-            {
-                ConstanciaNoProp.Text = "----------";
+               crystalReport.SetParameterValue("cnp_bd", "X");
+            } 
+            else
+            { 
+                crystalReport.SetParameterValue("cnp_bd", " ");
             }
-            Observaciones.Text = tbReport.Rows[0]["Observaciones"].ToString();
-           
+            crystalReport.SetParameterValue("observaciones_bd", tbReport.Rows[0]["Observaciones"].ToString());
         }
         #endregion
         #region Nuevo Tramite     
@@ -821,19 +784,15 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 consultaClave.cConsultarUltimoFolio();
                 consultaClave.cConsultarUltimoTramite();
                 var drTotalCopias = "";
-
-
-                /***Asignar valores***/
+                  /***Asignar valores***/
                 idTramite = Convert.ToInt32(consultaClave.getUltimoID()) + 1;
                 int folio = Convert.ToInt32(consultaClave.getUltimoFolio()) + 1;
                 /*Clave Catastral y datos del usuario**/
                 string cat = txtClaveCatastral.Text;
-
                 string n1 = txtNombre_uno.Text;
                 string n2 = txtNombre_dos.Text;
                 string ap = txtApellidoPaterno.Text;
                 string am = txtApellidoMaterno.Text;
-
                 String comentarios = txtObservacionesData.Text;
                 bool rdc = this.chkRenovacion.Checked;
                 bool cmc = this.chkCertificadoM.Checked;
@@ -893,19 +852,14 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 consultaClave.setIdTramite(idTramite);
                 consultaClave.setNuevoFolio(folio);
                 consultaClave.setEnvioId(idEn);
-
                 consultaClave.setClvCatastral(cat);
-
                 consultaClave.setNombre_uno(n1);
                 consultaClave.setNombre_dos(n2);
                 consultaClave.setApePaterno(ap);
                 consultaClave.setApeMaterno(am);
-
                 consultaClave.setComentarios(comentarios);
-
                 consultaClave.setArchivoInser(archivo);
                 consultaClave.setStatusInser(status);
-
                 consultaClave.setRenovacion(rdc);
                 consultaClave.setCopiasCer(cpc);
                 consultaClave.setCerMedidas(cmc);
@@ -924,62 +878,45 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 {
 
                         llenaDatosTramites_Denominación();
-                        this.Page.Title = "Modulo de Tramites | Principal";
-                        //Llenar TRDETALLE
-                        //Limpieza de Controles
-                        total = 0;
-                        duplicados = 0;
-                        tramitePrecios = 0;
-                        precioEnvio = 0;
-                        TotalPrecio = 0;
+                        clearControls();
                         alertNumero = 4;
-                    ScriptManager.RegisterStartupScript(this, GetType(),
-                     "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
+                        ScriptManager.RegisterStartupScript(this, GetType(),
+                         "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
                         ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
-                                                          $('#MainContent_tipeError').addClass('modal-header-success'); 
-                                                          $('#MainContent_mensajeTitulo').text('Exito'); $('#MainContent_mensajeUsuario').addClass('textalerta'); " +  "$('#MainContent_mensajeCuerpo').text('Usted ha creado un nuevo tramite');});", true);
-
+                                                              $('#MainContent_tipeError').addClass('modal-header-success'); 
+                                                              $('#MainContent_mensajeTitulo').text('Exito'); $('#MainContent_mensajeUsuario').addClass('textalerta'); " +  
+                                                              "$('#MainContent_mensajeCuerpo').text('Usted ha creado un nuevo tramite');});", true);
                         ScriptManager.RegisterStartupScript(this, GetType(),
                               "alert1", "$('#alert').modal('show');", true); 
-                  
-
                 }
                 else
                 {
-                    
+                        llenaDatosTramites_Denominación();
+                        clearControls();
                         alertNumero = 4;
-                        //Limpieza de Controles
-                        total = 0;
-                        duplicados = 0;
-                        tramitePrecios = 0;
-                        precioEnvio = 0;
-                        TotalPrecio = 0;
-                        this.Page.Title = "Modulo de Tramites | Principal";
+                        
                         ScriptManager.RegisterStartupScript(this, GetType(),
                         "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
 
                         ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
                                                           $('#MainContent_tipeError').addClass('modal-header-danger'); 
-                                                          $('#MainContent_mensajeTitulo').text('Error');$('#MainContent_mensajeCuerpo').text('Ha surgido un error crear su tramite  intentelo mas tarde');});", true);
+                                                          $('#MainContent_mensajeTitulo').text('Error');
+                                                          $('#MainContent_mensajeCuerpo').text('Ha surgido un error crear su tramite  intentelo mas tarde');});", true);
 
                         ScriptManager.RegisterStartupScript(this, GetType(),
-                              "alert1", "$('#alert').modal('show');", true);
-                  
+                              "alert1", "$('#alert').modal('show');", true);                
                 }
-
             }
             else
             {
+                llenaDatosTramites_Denominación();
                 alertNumero = 4;
-                this.Page.Title = "Modulo de Tramites | Principal";
+                clearControls();
                 ScriptManager.RegisterStartupScript(this, GetType(),
                  "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
-
-
                 ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
                                                           $('#MainContent_tipeError').addClass('modal-header-warning'); 
                                                           $('#MainContent_mensajeTitulo').text('Advertencia');$('#MainContent_mensajeCuerpo').text('Verifique al menos un tramite esta seleccionado');});", true);
-
                 ScriptManager.RegisterStartupScript(this, GetType(),
                       "alert1", "$('#alert').modal('show');", true);  
             }
@@ -1198,6 +1135,31 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 return i;
             }
         }
+
+        public void clearControls()
+        {
+            this.Page.Title = "Modulo de Tramites | Principal";
+            this.chkRenovacion.Checked = false;
+            this.chkCertificadoM.Checked = false;
+            this.chkNumOficial.Checked = false;
+            this.chkRegistroC.Checked = false;
+            this.chkCopiasCer.Checked = false;
+            this.chkConstanciaUnica.Checked = false;
+            this.chkCroquisLoc.Checked = false;
+            this.chkNopropiedad.Checked = false;
+            this.chkMetodoEnvio.Checked = false;
+
+            total = 0;
+            duplicados = 0;
+            tramitePrecios = 0;
+            precioEnvio = 0;
+            TotalPrecio = 0;
+            lblPrecio.Text = "00";
+            drMetodoEnvioS.Items.Clear();
+            Envio.Text = "00";
+            //Limpieza de Controles
+     
+        }
         #endregion
         #region Actualizaciones
         protected void btnActualizarArchivo_Click(object sender, EventArgs e)
@@ -1399,7 +1361,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
         }
 
         //seleccion Drlist
-        protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+        protected void drMetodoEnvioS_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Page.Title = "Modulo de Tramites | Principal";
            var da = drMetodoEnvioS.SelectedItem.Value.ToString();

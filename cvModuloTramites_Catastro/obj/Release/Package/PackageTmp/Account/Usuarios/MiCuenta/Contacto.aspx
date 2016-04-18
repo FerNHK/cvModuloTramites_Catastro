@@ -138,7 +138,6 @@
                                                 ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.pdf|.PDF)$"
                                                 ControlToValidate="UpFile" CssClass="text-red">
                                              </asp:RegularExpressionValidator>
-
                                  </span>
                             </div>
                         </ContentTemplate>
