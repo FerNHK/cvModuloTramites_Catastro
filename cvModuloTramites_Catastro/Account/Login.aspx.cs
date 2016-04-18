@@ -14,7 +14,7 @@ namespace cvModuloTramites_Catastro.Account
     {
         #region VariablesGlobales
         public static string cvCatastral_contacto = "";
-        public static Login_helper consultaClave = new Login_helper();
+        public static Login_Helper consultaClave = new Login_Helper();
        // public static Busqueda_cvCat consultaClave = new Busqueda_cvCat();
         public static DataTable  tbContacto=null;
         public static int val = 0;

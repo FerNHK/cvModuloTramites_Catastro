@@ -15,7 +15,9 @@ namespace cvModuloTramites_Catastro.Account
     {
         #region Variables_
         private static String  contacto="", email="", tel="" ;
-        public static Busqueda_cvCat consultaClave = new Busqueda_cvCat();
+        //public static Busqueda_cvCat consultaClave = new Busqueda_cvCat();
+        public static Register_Helper registroUsuario = new Register_Helper();
+        public static Login_Helper busquedaDatosContacto = new Login_Helper();
         public static int alerta = 0;
         #endregion
         #region Metodos
@@ -27,14 +29,15 @@ namespace cvModuloTramites_Catastro.Account
             if (!Page.IsPostBack)
             {
                 string secc = (string)Session["ClvCat"];
-                consultaClave.setClave(secc);
+                registroUsuario.setClave_Catastral(secc);
+                busquedaDatosContacto.setClave_Catastral(secc);
                 if (secc == "" || secc == null)
                 {
                     Response.Redirect("~/Account/Login.aspx");
                 }
                 else
                 {
-                    if (consultaClave.consultaDatosContacto() == false)
+                    if (busquedaDatosContacto.consultaDatosContacto() == false)
                     {
                        
                     }
@@ -59,10 +62,10 @@ namespace cvModuloTramites_Catastro.Account
                email != "" || email != null
                || tel != "" || tel != null)
             {
-                consultaClave.setContacto(contacto);
-                consultaClave.setEmail(email);
-                consultaClave.setTelefono(tel);
-                if (consultaClave.RegistroUsuarioNuevo() == true)
+                registroUsuario.setContacto(contacto);
+                registroUsuario.setEmail(email);
+                registroUsuario.setTelefono(tel);
+                if (registroUsuario.RegistroUsuarioNuevo() == true)
                 {
 
                     alerta = 2;
@@ -138,17 +141,9 @@ namespace cvModuloTramites_Catastro.Account
         {
             txtNombreContacto.Text = "";
             txtEmail.Text = "";
-           
             txtNumeroTelefono.Text = "";
         }
-        public void cl()
-        {
-            Response.Clear();
-
-            Response.ClearContent();
-            Response.ClearHeaders();
-            Response.Buffer = true;
-        }
+     
         #endregion
         #region  SessionClose
         protected void afterOut(object sender, EventArgs e)

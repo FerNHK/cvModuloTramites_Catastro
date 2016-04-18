@@ -10,7 +10,7 @@ using System.Data.SqlTypes;
 
 namespace cvModuloTramites_Catastro.Data
 {
-    public class Login_helper
+    public class Login_Helper
     {
        
         #region Variableslogin_Contacto
