@@ -14,7 +14,8 @@ namespace cvModuloTramites_Catastro.Account
     {
         #region VariablesGlobales
         public static string cvCatastral_contacto = "";
-        public static Busqueda_cvCat consultaClave = new Busqueda_cvCat();
+        public static Login_helper consultaClave = new Login_helper();
+       // public static Busqueda_cvCat consultaClave = new Busqueda_cvCat();
         public static DataTable  tbContacto=null;
         public static int val = 0;
         #endregion
@@ -24,7 +25,6 @@ namespace cvModuloTramites_Catastro.Account
             if (!Page.IsPostBack)
             {
                 string secc = (string)Session["ClvCat"];
-                consultaClave.setClave(secc);
                 if (secc == "" || secc == null)
                 {
                     ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
@@ -52,8 +52,8 @@ namespace cvModuloTramites_Catastro.Account
             cvCatastral_contacto = ClaveCat.Text.Replace(";", "").Replace("--", "");
             if (cvCatastral_contacto != null && cvCatastral_contacto != "")
             {
-                System.Threading.Thread.Sleep(5000);
-                consultaClave.setClave(cvCatastral_contacto.ToString());
+                System.Threading.Thread.Sleep(3000);
+                consultaClave.setClave_Catastral(cvCatastral_contacto.ToString());
                 if (consultaClave.consultaClave() == true)
                 {
                     if (consultaClave.consultaDatosContacto() != false)
@@ -115,7 +115,7 @@ namespace cvModuloTramites_Catastro.Account
             if(val == 1)
             {                       
                tbContacto = new DataTable();
-               tbContacto = consultaClave.getDatos();
+               tbContacto = consultaClave.getDatos_Contacto();
                Session["ClvCat"] = tbContacto.Rows[0]["cvecatastral"].ToString();
                String nombreContacto = tbContacto.Rows[0]["Nombre"].ToString(); 
                FormsAuthentication.RedirectFromLoginPage(nombreContacto, false);

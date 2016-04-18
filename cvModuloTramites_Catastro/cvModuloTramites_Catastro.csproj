@@ -160,6 +160,7 @@
     </Compile>
     <Compile Include="Data\Busqueda_cvCat.cs" />
     <Compile Include="Data\ConeccionCatastro.cs" />
+    <Compile Include="Data\Login_helper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
