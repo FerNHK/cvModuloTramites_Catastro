@@ -17,7 +17,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
 {
     public partial class Contacto : System.Web.UI.Page
     {
-        public static Busqueda_cvCat consultaClave = new Busqueda_cvCat();
+        public static Tramite_Helper consultaClave = new Tramite_Helper();
       /**private static int exitoEditarDatos = 0, errorEditarDatos = 0,
                            exitoDescargarpdf = 0, errorDescargarpdf = 0,
                            exitoSubiArchivo = 0, errorSubirArchivo = 0,

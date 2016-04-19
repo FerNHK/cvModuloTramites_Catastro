@@ -22,9 +22,10 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
     {
         #region VariablesGlobales
       
-        public static Busqueda_cvCat consultaClave = new Busqueda_cvCat();
-       public static int alertNumero = 0;
-       public static string editNombre = "";
+        public static Tramite_Helper consultaClave = new Tramite_Helper();
+        public static Login_Helper cBusqueda = new Login_Helper();
+        public static int alertNumero = 0;
+        public static string editNombre = "";
         ReportDocument crystalReport = new ReportDocument();
         public static DataTable tbDatosPropietario = null, tbTramitesDenominacion=null,
                                  tbPreciosTramite = null, tbMetodoPreciosEnvios = null,tbReport=null;
@@ -74,7 +75,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 }
                 else
                 {
-                    if (consultaClave.consultaDatosContacto() == false)
+                    if (cBusqueda.consultaDatosContacto() == false)
                     {
                         Response.Redirect("~/Account/Login.aspx");
                     }
@@ -880,8 +881,9 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                         llenaDatosTramites_Denominación();
                         clearControls();
                         alertNumero = 4;
+                        
                         ScriptManager.RegisterStartupScript(this, GetType(),
-                         "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
+                            "cerrarActModal", "$('#myModal').modal('toggle');", true);
                         ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
                                                               $('#MainContent_tipeError').addClass('modal-header-success'); 
                                                               $('#MainContent_mensajeTitulo').text('Exito'); $('#MainContent_mensajeUsuario').addClass('textalerta'); " +  
@@ -896,7 +898,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                         alertNumero = 4;
                         
                         ScriptManager.RegisterStartupScript(this, GetType(),
-                        "cerrarActModal", "$('#myModal').modal('toggle');   ", true);
+                        "cerrarActModal", "$('#myModal').modal('toggle');", true);
 
                         ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
                                                           $('#MainContent_tipeError').addClass('modal-header-danger'); 
@@ -971,7 +973,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             consultaClave.cCbusquedaIncrementarId();
            
             List<Tuple<int,int,int,int,float>> list = new  List<Tuple<int,int,int,int,float>>();
-            
+            TramiteDetalleID = incrementoId();
 
             float p = 0;
             int idTramitePrecio=0, cant;
@@ -983,7 +985,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 p = cPrecio(clave);
                 idTramitePrecio= idDelPrecio(clave);
                 cant = 1;
-                TramiteDetalleID= incrementoId();
+               
                 list.Add(new Tuple<int,int,int,int,float>(idTramite,TramiteDetalleID,idTramitePrecio,cant,p));
               
                 TramiteDetalleID +=1;

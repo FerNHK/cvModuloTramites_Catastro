@@ -158,7 +158,7 @@
     <Compile Include="Account\Usuarios\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Data\Busqueda_cvCat.cs" />
+    <Compile Include="Data\Tramite_Helper.cs" />
     <Compile Include="Data\ConeccionCatastro.cs" />
     <Compile Include="Data\Login_Helper.cs" />
     <Compile Include="Data\Register_Helper.cs" />
