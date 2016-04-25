@@ -45,7 +45,7 @@ namespace cvModuloTramites_Catastro.Data
                                 where Contacto.TerrenoID =Terreno.TERRENOID and 
                                         Terreno.TipoPredioid = TipoPredio.TipoPredioID and
                                         Terreno.PROPID = Propietario.PropID and
-                                        Propietario.tipoPersona = tipoPropietario.tipoPropID
+                                        Propietario.tipoPropietario = tipoPropietario.tipoPropID
                                         and terreno.cvecatastral = @ClaveCatastral";
             return action;
         }
@@ -108,7 +108,7 @@ namespace cvModuloTramites_Catastro.Data
         //consultaenvios
         public String ConsPrecioEnvio()
         {
-            String action = @"Select Envios.Descripcion,claveEnvio, Envios.precio from Envios";
+            String action = @"Select Envios.Descripcion, Envios.precio from Envios";
             return action;
         }
         //Actualizacion de Archivo

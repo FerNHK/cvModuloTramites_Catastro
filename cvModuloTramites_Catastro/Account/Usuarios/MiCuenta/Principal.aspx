@@ -452,27 +452,33 @@ EnableEventValidation="false" %>
          
                    </div>
                 </div>
-                 <div class="row">
+                 <div class="input-group">
                     <asp:UpdatePanel ID="actFile" runat="server" >
                         <ContentTemplate> 
-                            <div class="col-lg-9">
-                                 <span class="file-input btn  btn-file centrado"">Buscar Archivo… 
+                            <div class="col-lg-12 col-md-9  col-sm-8 col-xs-8">
+                                <span class="file-input centrado">Buscar Archivo… </span>
+                                    <div class="input-group">
                                        <asp:FileUpload ID="UpFile"  runat="server" Enabled="false" CssClass="form-control" />
+                                       <asp:LinkButton ID="TestLinkButton" CssClass="input-group-addon btn btn-warning" runat="server" style="color:white; border-color: #101010; background: #4aaf51;"  OnClick="btnActualizarArchivo_Click"  >ENVIAR</asp:LinkButton>    
+                      
+                                       </div>
                                              <asp:RegularExpressionValidator
                                                 id="RegularExpressionValidator1" runat="server"
-                                                ErrorMessage="Only PDF files are allowed!"
+                                                ErrorMessage="¡Solo se permiten archivos PDF menores de 1mb!"
+                                               
                                                 ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.pdf|.PDF)$"
-                                                ControlToValidate="UpFile" CssClass="text-red">
+                                                ControlToValidate="UpFile" CssClass="btn btn-danger" Style="color:white; display:block !Important;">
                                              </asp:RegularExpressionValidator>
 
-                                 </span>
-                            </div>
+                                
+                           
+
                         </ContentTemplate>
-                    </asp:UpdatePanel><br />
-                    <div class="col-lg-3">
-                        <asp:Button ID="btnActualizarArchivo" class="button_sub  btn btn-info " 
-                                     runat="server"  Text="Enviar" OnClick="btnActualizarArchivo_Click" />
-                  </div>
+                       <Triggers>
+                            <asp:PostBackTrigger ControlID="TestLinkButton" />
+                        </Triggers>
+                    </asp:UpdatePanel> 
+                   </div>
               </div>  
            </div>
         </div>    

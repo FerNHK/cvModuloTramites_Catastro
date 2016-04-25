@@ -127,21 +127,24 @@
                    </div>
                 </div>
                          <div class="row">
-                          <asp:UpdatePanel ID="actFile" runat="server" >
-                        <ContentTemplate> 
-                            <div class="col-lg-10 col-lg-offset-2  col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1         col-xs-12    ">
-                                 <span class="file-input btn  btn-file centrado"">Buscar Archivo… 
-                                       <asp:FileUpload ID="UpFile"  runat="server"  CssClass="form-control" />
-                                             <asp:RegularExpressionValidator
+                          <div class="col-lg-12 col-md-9  col-sm-8 col-xs-8">
+                                 <span class="file-input centrado">Buscar Archivo… </span>
+
+                                 <div class="input-group">
+                                     <span class="input-group-addon btn btn-warning"  style="color:white; border-color: #101010; background: #4aaf51;">Archivo<span class="glyphicon glyphicon-file"></span></span>  <asp:FileUpload ID="UpFile"  runat="server"  CssClass="form-control "  style="border-color: #101010; overflow:hidden;" />
+                                        
+                                       
+                                </div>
+                                           <asp:RegularExpressionValidator
                                                 id="RegularExpressionValidator1" runat="server"
-                                                ErrorMessage="Only PDF files are allowed!"
+                                                ErrorMessage="¡Solo se permiten archivos PDF menores de 1mb!"
+                                               
                                                 ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.pdf|.PDF)$"
-                                                ControlToValidate="UpFile" CssClass="text-red">
+                                                ControlToValidate="UpFile" CssClass="btn btn-danger" Style="color:white; display:block !Important;">
                                              </asp:RegularExpressionValidator>
-                                 </span>
+  
+                              
                             </div>
-                        </ContentTemplate>
-                    </asp:UpdatePanel>
                          </div>
                      </div>
                          <div class="form-group">
