@@ -66,6 +66,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 
                 drpTotalcopias.Items.Clear();
                 drpTotalcopias.Items.Insert(0, new ListItem("0"));
+                drMetodoEnvioS.Items.Insert(0, new ListItem("Seleccion de un Metodo de Envio"));
                 string secc = (string)Session["ClvCat"];
                 consultaClave.setClave(secc);
                 if (secc == "" || secc == null)
@@ -219,7 +220,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             drMetodoEnvioS.DataTextField = "Descripcion";
             drMetodoEnvioS.DataValueField = "Descripcion";
             drMetodoEnvioS.DataBind();
-            drMetodoEnvioS.Items.Insert(0,new ListItem( "Seleccion de un Metodo de Envio"));
+            drMetodoEnvioS.Items.Insert(0, new ListItem("Seleccion de un Metodo de Envio"));
            
 
         }
@@ -232,6 +233,10 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             drdCopias.Items.Insert(3, new ListItem("3"));
             drdCopias.Items.Insert(4, new ListItem("4"));
             drdCopias.Items.Insert(5, new ListItem("5"));
+            drdCopias.Items.Insert(6, new ListItem("6"));
+            drdCopias.Items.Insert(7, new ListItem("7"));
+            drdCopias.Items.Insert(8, new ListItem("8"));
+            drdCopias.Items.Insert(9, new ListItem("9"));
         }
         #endregion
         #region EventosDataGridview
@@ -251,7 +256,10 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 if (row.RowIndex == gvCustomers.SelectedIndex)
                 {
                     limpiar_controles();
+
                     UpFile.Enabled = true;
+
+                  // TestLinkButton.Enabled = true;
                     string data = gvCustomers.SelectedRow.Cells[0].Text;
                     consultaClave.setFolio(data);
                     llenaDatosDenominacion();
@@ -1171,6 +1179,9 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             {
                 alertNumero = 3;
                 ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                                                          $('#MainContent_tipeError').removeClass('modal-header-danger');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-info');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-succes');
                                                           $('#MainContent_tipeError').addClass('modal-header-warning'); 
                                                           $('#MainContent_mensajeTitulo').text('Advertencia');
                                                           $('#MainContent_mensajeCuerpo').text('No existe un archivo para ser alamcenado o este archivo supera el tamaño de 1 mb');});", true);
@@ -1191,6 +1202,9 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 {
                     alertNumero = 3;
                     ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                                                          $('#MainContent_tipeError').removeClass('modal-header-danger');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-warning');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-info');
                                                           $('#MainContent_tipeError').addClass('modal-header-success'); 
                                                           $('#MainContent_mensajeTitulo').text('Exito'); $('#MainContent_mensajeUsuario').addClass('textalerta'); " +
                                                          "$('#MainContent_mensajeCuerpo').text('Exito  al actualizar su archivo de pago');});", true);
@@ -1209,6 +1223,9 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                     consultaClave.setArchivo(null);
                     consultaClave.setFolio("");
                     ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                                                          $('#MainContent_tipeError').removeClass('modal-header-info');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-warning');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-success');
                                                           $('#MainContent_tipeError').addClass('modal-header-danger'); 
                                                           $('#MainContent_mensajeTitulo').text('Error');
                                                           $('#MainContent_mensajeCuerpo').text('A causa de un erro su archivo no pudo ser enviado satisfactoriamente. Intentelo mas tarde.');});", true);
@@ -1229,6 +1246,9 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             {
                 alertNumero = 3;
                 ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                                                          $('#MainContent_tipeError').removeClass('modal-header-success');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-danger');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-warning');
                                                           $('#MainContent_tipeError').addClass('modal-header-info'); 
                                                           $('#MainContent_mensajeTitulo').text('Informativo');
                                                           $('#MainContent_mensajeCuerpo').text('Usted no ha elegido un tramite de la tabla para poder cancelarlo. Seleccione uno y pruebe volver a intentarlo.');});", true);
@@ -1244,6 +1264,8 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                     status = "";
                     consultaClave.setStatusCancelado(status);
                     ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                                                          $('#MainContent_tipeError').removeClass('modal-header-warning');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-danger');
                                                           $('#MainContent_tipeError').addClass('modal-header-success'); 
                                                           $('#MainContent_mensajeTitulo').text('Exito');
                                                           $('#MainContent_mensajeCuerpo').text('Usted ha cancelado su tramite');});", true);
@@ -1257,6 +1279,8 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 {
                     alertNumero = 3;
                     ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                                                          $('#MainContent_tipeError').removeClass('modal-header-success');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-warning');
                                                           $('#MainContent_tipeError').addClass('modal-header-danger'); 
                                                           $('#MainContent_mensajeTitulo').text('Exito');
                                                           $('#MainContent_mensajeCuerpo').text('A causa de un error no se ha podido cancelar su tramite. Intentelo mas tarde.');});", true);
@@ -1298,19 +1322,21 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                   
                     
                     ScriptManager.RegisterStartupScript(this, GetType(),
-                     "cerrarActModal", "$('#ActualizarUsuario').modal('toggle');   ", true);
+                     "cerrarActualizarUsuario", "$('#ActualizarUsuario').modal('toggle');   ", true);
                     string name = @"$('#MainContent_mensajeUsuario').html('Usuario:" + " " + editNombre +"<br>"+
                                                                     "Correo:" + " " + editEmail + "" + "<br>" +
                                                                     "Telefono" + " " + editTelefono + "');";
                  
-                    ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ExitoActualizarUsuario", @"$(function(){
                                                           $('#MainContent_tipeError').addClass('modal-header-success'); 
+                                                          $('#MainContent_tipeError').removeClass('modal-header-danger');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-warning');
                                                           $('#MainContent_mensajeTitulo').text('Exito'); 
                                                           $('#MainContent_mensajeUsuario').addClass('textalerta'); " + name +
                                                          "$('#MainContent_mensajeCuerpo').text('Exito al camabiar su usuario');});", true);   
 
                     ScriptManager.RegisterStartupScript(this, GetType(),
-                          "alert1", "$('#alert').modal('show');", true);
+                          "AbrirModalAlerta", "$('#alert').modal('show');", true);
                     this.Page.Title = "Modulo de Tramites | Principal";
                    }
                 else
@@ -1325,6 +1351,8 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                   
 
                     ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                                                          $('#MainContent_tipeError').removeClass('modal-header-success');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-warning');
                                                           $('#MainContent_tipeError').addClass('modal-header-danger'); 
                                                           $('#MainContent_mensajeTitulo').text('Error');$('#MainContent_mensajeCuerpo').text('Ha surgido un error al almacenar sus datos intentelo mas tarde');});", true);
 
@@ -1345,6 +1373,8 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
 
 
                 ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @"$(function(){
+                                                          $('#MainContent_tipeError').removeClass('modal-header-success');
+                                                          $('#MainContent_tipeError').removeClass('modal-header-danger');
                                                           $('#MainContent_tipeError').addClass('modal-header-warning'); 
                                                           $('#MainContent_mensajeTitulo').text('Advertencia');$('#MainContent_mensajeCuerpo').text('Verifique que los datos que esta agregando sean correctos');});", true);
 
@@ -1358,7 +1388,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
         protected void btnCerrarModal_clicklistener(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(this, GetType(),
-                      "alert1", "$('#ActualizarUsuario').modal('toggle');", true);
+                      "cerrarActualizarUsuario", "$('#ActualizarUsuario').modal('toggle');", true);
             this.Page.Title = "Modulo de Tramites | Principal";
         }
 
@@ -1460,6 +1490,12 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 //   Crear nuevo tramite error
                
             }
+        }
+
+        protected void lnkEnvioArchivo_Click(object sender, EventArgs e)
+        {
+            int filePath = UpFile.FileBytes.Length;
+            Response.Write(filePath);
         }
 
     
