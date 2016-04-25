@@ -82,7 +82,7 @@
              <hr class="featurette-divider"/>
              <div class="row featurette">
               
-              <div class="col-lg-6 col-md-5 col-sm-5 ">
+              <div class="col-lg-7 col-md-7 col-sm-7 ">
                        <div class="form-group">
                        <div class='message-dialog bg-color-blue fg-color-white' style='width: 50%; z-index:1000;' runat="server" id="myDiv" />
                        <asp:Label ID="EXITOERRO_warning" runat=server></asp:Label>
@@ -127,7 +127,7 @@
                    </div>
                 </div>
                          <div class="row">
-                          <div class="col-lg-12 col-md-9  col-sm-8 col-xs-8">
+                          <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
                                  <span class="file-input centrado">Buscar Archivo… </span>
 
                                  <div class="input-group">
@@ -155,7 +155,7 @@
                       
                
               </div>
-              <div class=" col-lg-6 col-md-7  col-xs-12 col-sm-7 ">
+              <div class=" col-lg-5 col-md-5  col-xs-12 col-sm-5 ">
                 <h4 class="centrado">¡¡Bienvenido a este apartado.!!</h4>
                 <p class=" pull-left " style="text-align: justify;">
                     Mediante este formulario podra enviar dudas a la direccion de correo <a>fer_nhk@hotmail.com</a>

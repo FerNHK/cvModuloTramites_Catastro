@@ -458,6 +458,7 @@ EnableEventValidation="false" %>
                             <div class="col-lg-12 col-md-9  col-sm-8 col-xs-8">
                                 <span class="file-input centrado">Buscar Archivo… </span>
                                     <div class="input-group">
+
                                        <asp:FileUpload ID="UpFile"  runat="server" Enabled="false" CssClass="form-control" />
                                        <asp:LinkButton ID="TestLinkButton" CssClass="input-group-addon btn btn-warning" runat="server" style="color:white; border-color: #101010; background: #4aaf51;"  OnClick="btnActualizarArchivo_Click"  >ENVIAR</asp:LinkButton>    
                       
