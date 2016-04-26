@@ -19,6 +19,24 @@
 <script src="../../../Scripts/js/bootstrap.min.js"></script>
 <script src="../../../Scripts/js/validator.min.js"></script>
 <script src="../../../Scripts/JScript1.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this),
+                numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+        });
+
+        $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+            console.log(numFiles);
+            console.log(label);
+            $("#valdfil").val(label);
+        });
+    });
+
+</script>
 </asp:Content>
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
 <form id="Form1" data-toggle="validator" role="form" novalidate="true" runat="server">
@@ -130,11 +148,17 @@
                           <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
                                  <span class="file-input centrado">Buscar Archivo… </span>
 
-                                 <div class="input-group">
-                                     <span class="input-group-addon btn btn-warning"  style="color:white; border-color: #101010; background: #4aaf51;">Archivo<span class="glyphicon glyphicon-file"></span></span>  <asp:FileUpload ID="UpFile"  runat="server"  CssClass="form-control "  style="border-color: #101010; overflow:hidden;" />
-                                        
-                                       
-                                </div>
+                                  <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <span class=" input-group-addon btn btn-warning btn-file" style="color:white; border-color: #101010; background: #4aaf51;     height: 40px;">
+                                                 <span class=""  >Archivo
+                                                     <span class="glyphicon glyphicon-file"></span></span>  
+                                                           <asp:FileUpload ID="UpFile"  runat="server"  CssClass="form-control "  style="border-color: #101010; overflow:hidden;" />
+                                     
+                                            </span>
+                                        </span>
+                                        <input type="text" placeholder="No se ha seleccionado un archivo" id="valdfil" class="form-control" disabled="disabled" readonly />
+                                    </div>
                                            <asp:RegularExpressionValidator
                                                 id="RegularExpressionValidator1" runat="server"
                                                 ErrorMessage="¡Solo se permiten archivos PDF menores de 1mb!"
@@ -146,6 +170,12 @@
                               
                             </div>
                          </div>
+                          <span class="file-input centrado">Buscar Archivo… </span>
+                                <div class="editor-label">
+                                    <label>Fil</label>
+                                   
+                                </div>
+
                      </div>
                          <div class="form-group">
                          <asp:Button ID="btnEditar" class="button_sub  btn btn-info " runat="server"  

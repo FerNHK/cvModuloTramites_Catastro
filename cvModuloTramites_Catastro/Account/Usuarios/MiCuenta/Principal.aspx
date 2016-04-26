@@ -180,17 +180,17 @@ EnableEventValidation="false" %>
                                         placeholder="Primer Nombre...."  runat="server" Enabled="false"></asp:TextBox> 
              	        </div>
              	        <div class="col-lg-3 col-md-3 col-sm-3">
-             		         <label  style="font-size:12px;">Segundo Nombre</label>
+             		         <label  style="font-size:12px;">Segundo/Nombre</label>
              		         <asp:TextBox ID="txtNombre_dos" type="text" CssClass="form-control form-control input-error" 
                                     placeholder="Segundo Nombre...."  runat="server" Enabled="false"></asp:TextBox>
              	        </div>
              	        <div class="col-lg-3 col-md-3 col-sm-3">
-             		         <label  style="font-size:12px;">Primer Apellido</label>
+             		         <label  style="font-size:12px;">Apellido Paterno</label>
              		         <asp:TextBox ID="txtApellidoPaterno" type="text" CssClass="form-control form-control input-error" 
                                     placeholder="Primer Apellido...."  runat="server" Enabled="false"></asp:TextBox>
              	        </div>
              	        <div class="col-lg-3 col-md-3 col-sm-3">
-             		      <label  style="font-size:12px;">Segundo Apellido</label>
+             		      <label  style="font-size:12px;">Apellido Materno</label>
              		     
                           <asp:TextBox ID="txtApellidoMaterno" type="text" CssClass="form-control form-control input-error" 
                                     placeholder="Segundo Apellido...."  runat="server" Enabled="false"></asp:TextBox>
@@ -448,38 +448,43 @@ EnableEventValidation="false" %>
             <div class="row" >
 		          <div  class="col-lg-8 col-lg-offset-2
                    col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" >
-            <label class="Centrado" style=" text-align: center;">Proporcione su archivo de pago. De preferencia PDF</label> 
+                         <label class="Centrado" style=" text-align: center;">Proporcione su archivo de pago. De preferencia PDF</label> 
          
                    </div>
-                </div>
-                 <div class="input-group">
+                     <div class="input-group">
                     <asp:UpdatePanel ID="actFile" runat="server" >
                         <ContentTemplate> 
-                            <div class="col-lg-12 col-md-9  col-sm-8 col-xs-8">
+                           <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
                                 <span class="file-input centrado">Buscar Archivo… </span>
-                                    <div class="input-group">
 
-                                       <asp:FileUpload ID="UpFile"  runat="server" Enabled="false" CssClass="form-control" />
-                                       <asp:LinkButton ID="TestLinkButton" CssClass="input-group-addon btn btn-warning" runat="server" style="color:white; border-color: #101010; background: #4aaf51;"  OnClick="btnActualizarArchivo_Click"  >ENVIAR</asp:LinkButton>    
-                      
-                                       </div>
-                                             <asp:RegularExpressionValidator
+
+                                <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <span class=" input-group-addon btn btn-info btn-file" style="color:white; border-color: #101010;      height: 40px;">
+                                                 <span class=""  >Archivo
+                                                     <span class="glyphicon glyphicon-file"></span></span>  
+                                                           <asp:FileUpload ID="UpFile"  runat="server" Enabled="false"  CssClass="form-control "  style="border-color: #101010; overflow:hidden;" />  
+                                                      </span>
+                                        </span>
+                                        <input type="text" placeholder="No se ha seleccionado un archivo" id="valdfil" class="form-control" disabled="disabled" readonly />
+                                         <asp:LinkButton ID="TestLinkButton" CssClass="input-group-addon btn btn-info" runat="server" style="color:white; border-color: #101010; background: #4aaf51;"  OnClick="btnActualizarArchivo_Click"  >ENVIAR</asp:LinkButton>                          
+                                      
+                                    </div>
+                                           <asp:RegularExpressionValidator
                                                 id="RegularExpressionValidator1" runat="server"
                                                 ErrorMessage="¡Solo se permiten archivos PDF menores de 1mb!"
                                                
                                                 ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))(.pdf|.PDF)$"
                                                 ControlToValidate="UpFile" CssClass="btn btn-danger" Style="color:white; display:block !Important;">
                                              </asp:RegularExpressionValidator>
-
-                                
-                           
-
                         </ContentTemplate>
                        <Triggers>
                             <asp:PostBackTrigger ControlID="TestLinkButton" />
                         </Triggers>
                     </asp:UpdatePanel> 
                    </div>
+                </div>
+               
               </div>  
            </div>
         </div>    
@@ -883,7 +888,26 @@ EnableEventValidation="false" %>
                                                });
 
                                            });
-                                         </script>       
+                                         </script>   
+                                         
+                                         <script type="text/javascript">
+
+                                             $(document).ready(function () {
+                                                 $(document).on('change', '.btn-file :file', function () {
+                                                     var input = $(this),
+                                                         numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                                                         label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                                                     input.trigger('fileselect', [numFiles, label]);
+                                                 });
+
+                                                 $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+                                                     console.log(numFiles);
+                                                     console.log(label);
+                                                     $("#valdfil").val(label);
+                                                 });
+                                             });
+
+</script>    
 
 </form>
 

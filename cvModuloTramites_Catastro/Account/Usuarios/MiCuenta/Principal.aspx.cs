@@ -266,6 +266,25 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                     row.BackColor = ColorTranslator.FromHtml("#A1DCF2");
                     row.ToolTip = "Se ha elegido esta el siguiente Folio"+""+data;
                     Page.Title = "Modulo de Tramites | Principal";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CumstomText", @" $(document).ready(function () {
+                  $(document).on('change', '.btn-file :file', function () {
+                      var input = $(this),
+                          numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                          label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                      input.trigger('fileselect', [numFiles, label]);
+                  });
+
+                  $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+                      console.log(numFiles);
+                      console.log(label);
+                      $('#valdfil').val(label);
+                  });
+              });
+            ", true);
+                    
+
+
+
                 }
                 else
                 {
@@ -1174,7 +1193,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
         #region Actualizaciones
         protected void btnActualizarArchivo_Click(object sender, EventArgs e)
         {
-
+            gvCustomers.SelectedIndex = -1;
             if (UpFile.PostedFile == null || UpFile.PostedFile.ContentLength == 0 || UpFile.FileBytes.Length >= 1024000)
             {
                 alertNumero = 3;
