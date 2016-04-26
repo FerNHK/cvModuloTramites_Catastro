@@ -25,7 +25,7 @@ namespace cvModuloTramites_Catastro.Data
         String nombre2 = "";
         String Ap = "";
         String Am = "";
-
+        String NombreArchivo = "";
         String comentarios = "";
 
         Byte[] pdf = null;
@@ -370,6 +370,15 @@ namespace cvModuloTramites_Catastro.Data
         {
             return b;
         }
+        //Set NombreArchivo
+        public void setNombreArchivo(String nombreArchivo)
+        {
+            this.NombreArchivo = nombreArchivo;
+        }
+        public String getNombreArchivo()
+        {
+            return NombreArchivo;
+        }
         //Set estatus
         public void setStatusCancelado(String s)
         {
@@ -602,6 +611,7 @@ namespace cvModuloTramites_Catastro.Data
                 conn.Open();
                 comando = new SqlCommand(coneccion.act_Archivo(), conn);
                 comando.Parameters.AddWithValue("@Archivo", SqlDbType.Binary).Value = getArchivo();
+                comando.Parameters.AddWithValue("@nombreArchivo", getNombreArchivo());
                 comando.Parameters.AddWithValue("@Folio", getFolio());
                 comando.Parameters.AddWithValue("@ClaveCatastral", getClave());
                 
@@ -774,9 +784,7 @@ namespace cvModuloTramites_Catastro.Data
                     comando.Parameters.AddWithValue("@Apellido1",getApePaterno() );
                     comando.Parameters.AddWithValue("@Apellido2",getApeMaterno());
                     comando.Parameters.AddWithValue("@Atendido", DBNull.Value);
-
                     comando.Parameters.AddWithValue("@Archivo", SqlBinary.Null);
-                    
                     comando.Parameters.AddWithValue("@Status", getStatusInser());
                     comando.Parameters.AddWithValue("@renovacion",getRenovacion() );
                     comando.Parameters.AddWithValue("@copiasCer",getCopiasCer() );
@@ -787,9 +795,15 @@ namespace cvModuloTramites_Catastro.Data
                     comando.Parameters.AddWithValue("@Croquis",getCroquis() );
                     comando.Parameters.AddWithValue("@numCopias", getTotalCopias());
                     comando.Parameters.AddWithValue("@TerrenoId", getTerrenoId());
-                   
                     comando.Parameters.AddWithValue("@NoPropiedad", getConstanciaNoRegistro());
-                   
+                    verificación = false;
+                    comando.Parameters.AddWithValue("@nombreArchivo", DBNull.Value);
+                    comando.Parameters.AddWithValue("@RegistroPredio", verificación);
+                    comando.Parameters.AddWithValue("@SubdivicionPredio", verificación);
+                    comando.Parameters.AddWithValue("@FusionPredio", verificación);
+                    comando.Parameters.AddWithValue("@ExDocumentos", verificación);
+                    comando.Parameters.AddWithValue("@Planos", verificación);
+                    comando.Parameters.AddWithValue("@Otro", verificación);
                     int count = Convert.ToInt32(comando.ExecuteNonQuery());
                     if (count == 1)
                     {

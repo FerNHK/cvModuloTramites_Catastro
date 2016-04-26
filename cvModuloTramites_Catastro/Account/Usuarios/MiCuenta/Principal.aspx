@@ -436,9 +436,9 @@ EnableEventValidation="false" %>
 			  <label for="comment">Observaciones:</label>
               <asp:UpdatePanel ID="actObser" runat="server">
                     <ContentTemplate> 
-			      <asp:textbox id="txtObservaciones" TextMode="multiline" Columns="50"
+			      <asp:textbox id="txtObservaciones" TextMode="multiline" Columns="100"
                                  Rows="10" style="max-width:100%; height:100px;"  runat="server"  
-                                 CssClass="form-control input-error" Enabled="false"/>
+                                 CssClass=" input-error" Enabled="false"/>
                                  </ContentTemplate>
                                  </asp:UpdatePanel>
               
@@ -447,7 +447,7 @@ EnableEventValidation="false" %>
 		   </div>
             <div class="row" >
 		          <div  class="col-lg-8 col-lg-offset-2
-                   col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-10 col-xs-offset-1" >
+                   col-md-11 col-md-offset-2 col-sm-11 col-sm-offset-1 col-xs-10 col-xs-offset-1" >
                          <label class="Centrado" style=" text-align: center;">Proporcione su archivo de pago. De preferencia PDF</label> 
          
                    </div>
@@ -466,7 +466,7 @@ EnableEventValidation="false" %>
                                                            <asp:FileUpload ID="UpFile"  runat="server" Enabled="false"  CssClass="form-control "  style="border-color: #101010; overflow:hidden;" />  
                                                       </span>
                                         </span>
-                                        <input type="text" placeholder="No se ha seleccionado un archivo" id="valdfil" class="form-control" disabled="disabled" readonly />
+                                        <input type="text" placeholder="No se ha seleccionado un archivo" id="valdfil" class="form-control" disabled="disabled" style="border-color: #101010; overflow:hidden;" readonly />
                                          <asp:LinkButton ID="TestLinkButton" CssClass="input-group-addon btn btn-info" runat="server" style="color:white; border-color: #101010; background: #4aaf51;"  OnClick="btnActualizarArchivo_Click"  >ENVIAR</asp:LinkButton>                          
                                       
                                     </div>

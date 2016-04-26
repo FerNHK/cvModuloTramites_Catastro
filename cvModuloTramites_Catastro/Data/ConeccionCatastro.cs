@@ -73,7 +73,7 @@ namespace cvModuloTramites_Catastro.Data
                                      Terreno.TERRENOID = Contacto.TerrenoID and
                                      Terreno.TERRENOID = Tramite.TERRENOID and
                                      Tramite.StatusTramite = statusTramite.StatusTramite and
-                                     Terreno.cvecatastral = @ClaveCatastral";
+                                     Terreno.cvecatastral = @ClaveCatastral Order By Folio ASC";
             return action;
         }
 
@@ -121,7 +121,7 @@ namespace cvModuloTramites_Catastro.Data
         public String act_Archivo()
         {
             String action = @"UPDATE Tramite
-                                 SET Archivo=@Archivo
+                                 SET Archivo=@Archivo, NombreArchivo=@nombreArchivo
                                WHERE Folio=@Folio and 
                                      ClaveCatastral =@ClaveCatastral";
             return action;
@@ -152,11 +152,14 @@ namespace cvModuloTramites_Catastro.Data
 			                              [ApePat],[ApeMat],[Atendio] ,[Archivo],[StatusTramite],
 		                                  [RenovacionCedula],[CopiaCertificada],[CerMedidasColindancia],
 		                                  [constanciapropiedad],[ConstanciaNumero],[ConstanciaRegistro],
-		                                  [Croquis],[NumCopias],[TERRENOID],[constanciaNopropiedad])
+		                                  [Croquis],[NumCopias],[TERRENOID],[constanciaNopropiedad],
+                                          [NombreArchivo],[RegistroPredio],[SubdivicionPredio],
+                                          [FusionPredio],[ExpedicionDocumentos],[SolicitudPlanos],[Otro])
                       values(@nuevoId,@nuevoFolio,@Fehca,@observacion,
                              @total,@idEnvio,@ClaveCatastral,@Nombre1,@Nombre2,@Apellido1,@Apellido2,@Atendido,@Archivo,@Status,
                              @renovacion,@copiasCer,@cerMedidas,@constanciaProp,@consNumero,@consRegistro,
-                             @Croquis,@numCopias,@TerrenoId,@NoPropiedad)
+                             @Croquis,@numCopias,@TerrenoId,@NoPropiedad,
+                             @nombreArchivo,@RegistroPredio, @SubdivicionPredio,@FusionPredio,@ExDocumentos,@Planos,@Otro)
                              SET IDENTITY_INSERT Tramite OFF ";
             return action;
         }
