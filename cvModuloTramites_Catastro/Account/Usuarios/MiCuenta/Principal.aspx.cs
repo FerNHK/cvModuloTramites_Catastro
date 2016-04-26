@@ -48,6 +48,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
         //Variables para Insertar en TRDetalle 
         static float RDC=0, CSP=0, CMC=0, CUP=0,
                      CNO=0, CNP=0, CDR=0, CDL=0;
+        static string filePath = "";
                         
         #endregion
         #region Insert 
@@ -318,10 +319,8 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 constanciaReg = Convert.ToBoolean(tn.Rows[d]["ConstanciaRegistro"]);
                 Croquiz = Convert.ToBoolean(tn.Rows[d]["Croquis"]);
                 ConstNoProp = Convert.ToBoolean(tn.Rows[d]["constanciaNopropiedad"]);
-                
                 cantidad = (int)tn.Rows[d]["NumCopias"];
                 observaciones = tn.Rows[d]["Observaciones"].ToString();
-
                 NombreArchivo = tn.Rows[d]["NombreArchivo"].ToString();
                 RegistroPredio = Convert.ToBoolean(tn.Rows[d]["RegistroPredio"]);
                 SubdivisionPredios = Convert.ToBoolean(tn.Rows[d]["SubdivicionPredio"]);
@@ -329,12 +328,9 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 ExpDocumentos = Convert.ToBoolean(tn.Rows[d]["ExpedicionDocumentos"]);
                 SolicitudPlanos = Convert.ToBoolean(tn.Rows[d]["SolicitudPlanos"]);
                 Otro = Convert.ToBoolean(tn.Rows[d]["Otro"]);
-                
-
                 if (RevCedula == true)
                 {
                     chkRenovacionC.Checked = RevCedula;
-                    
                 }
                 else
                 {
@@ -346,8 +342,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                     if (cantidad >= 1)
                     {
                         drpTotalcopias.Items.Insert(0, new ListItem(cantidad.ToString()));
-                    }
-                   
+                    }       
                 }
                 else
                 {
@@ -395,7 +390,6 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 }
                 if (ConstNoProp == true)
                 {
-                  
                     chkConstaciaNoP.Checked = ConstNoProp;
                 }
                 else { chkConstaciaNoP.Checked = ConstNoProp; }
@@ -412,7 +406,6 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                     ScriptManager.RegisterStartupScript(this, GetType(), "ArchivoVacio", @"$(function(){
                                                           $('#valdfil').val(''); 
                                                          });", true);
-               
                 }
                 else
                 {
@@ -1245,7 +1238,6 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 return i;
             }
         }
-
         public void clearControls()
         {
             this.Page.Title = "Modulo de Tramites | Principal";
@@ -1288,16 +1280,18 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 ScriptManager.RegisterStartupScript(this, GetType(),
                       "alert1", "$('#alert').modal('show');", true);
                 this.Page.Title = "Modulo de Tramites | Principal";
+                
             }
             else
             {
-                string filePath = UpFile.PostedFile.FileName;
+                 filePath = UpFile.PostedFile.FileName;
                 string filename = Path.GetFileName(filePath);
                 string ext = Path.GetExtension(filename);
                 Stream fs = UpFile.PostedFile.InputStream;
                 BinaryReader br = new BinaryReader(fs);
                 Byte[] bytes = br.ReadBytes((Int32)fs.Length);
                 consultaClave.setArchivo(bytes);
+                consultaClave.setNombreArchivo(filePath.ToString());
                 if (consultaClave.cActualizacionArchivo() == true)
                 {
                     alertNumero = 3;
@@ -1311,13 +1305,16 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                     ScriptManager.RegisterStartupScript(this, GetType(),
                           "alert1", "$('#alert').modal('show');", true);
                     this.Page.Title = "Modulo de Tramites | Principal";
+                   
                     bytes = null;
                     consultaClave.setArchivo(bytes);
                     consultaClave.setArchivo(null);
+                    consultaClave.setNombreArchivo("");
                     consultaClave.setFolio("");
                 }
                 else
                 {
+                    alertNumero = 3;
                     bytes = null;
                     consultaClave.setArchivo(bytes);
                     consultaClave.setArchivo(null);
@@ -1332,6 +1329,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                     ScriptManager.RegisterStartupScript(this, GetType(),
                           "alert1", "$('#alert').modal('show');", true);
                     this.Page.Title = "Modulo de Tramites | Principal";
+
                 }
             }
             
@@ -1392,8 +1390,6 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
 
         }
         #endregion
-
-
         //Verificar Mensaje de Exito y falla
         protected void btnEditarContacto_clicklistener(object sender, EventArgs e)
         {
@@ -1484,14 +1480,12 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             }
 
         }
-
         protected void btnCerrarModal_clicklistener(object sender, EventArgs e)
         {
             ScriptManager.RegisterStartupScript(this, GetType(),
                       "cerrarActualizarUsuario", "$('#ActualizarUsuario').modal('toggle');", true);
             this.Page.Title = "Modulo de Tramites | Principal";
         }
-
         //seleccion Drlist
         protected void drMetodoEnvioS_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1510,7 +1504,6 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                Envio.Text = val2.ToString();
            }
         }
-
         protected void drdCopias_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.Page.Title = "Modulo de Tramites | Principal";
@@ -1553,9 +1546,6 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             }
 
         }
-
-       
-
         protected void btnCloseModalAction_onClick(object sender, EventArgs e)
         {
             this.Page.Title = "Modulo de Tramites | Principal";
@@ -1579,6 +1569,11 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                     //exito al subir archivo, cancelar tramite,
                     ScriptManager.RegisterStartupScript(this, GetType(),
                          "ServerControlScript", "$('#alert').modal('toggle');", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "EfectoInput", @"$(function(){
+                                                          $('#valdfil').val('" + filePath.ToString() + @"'); 
+                                                         });", true);
+                    llenaDatosDenominacion();
+                    filePath = "";
                     break;
                 
                 case 4:
@@ -1592,12 +1587,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
             }
         }
 
-        protected void lnkEnvioArchivo_Click(object sender, EventArgs e)
-        {
-            int filePath = UpFile.FileBytes.Length;
-            Response.Write(filePath);
-        }
-
+       
     
     }
 
