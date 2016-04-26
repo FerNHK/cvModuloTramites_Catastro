@@ -230,7 +230,7 @@ EnableEventValidation="false" %>
                                 <asp:BoundField DataField="Folio" HeaderText="Folio"  />
                                 <asp:BoundField DataField="FechaTramite" HeaderText="Fecha" />
                                 <asp:BoundField DataField="Total" HeaderText="Total" />
-                                <asp:BoundField DataField="StatusTramite" HeaderText="Estado" />
+                                <asp:BoundField DataField="Nombre" HeaderText="Estado" />
                             </Columns>
                         </asp:GridView>
                         </ContentTemplate>

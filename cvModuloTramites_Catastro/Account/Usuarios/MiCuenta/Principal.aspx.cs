@@ -33,9 +33,13 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
         public static bool RevCedula = false, copiasCer = false,
                            medidasCol = false, ConstUnicapro = false,
                            numeroOficial = false, constanciaReg = false,
-                          Croquiz = false,  ConstNoProp = false;
+                           Croquiz = false,  ConstNoProp = false,
+                         
+                           RegistroPredio=false, SubdivisionPredios=false,
+                           FusionPredio =false, ExpDocumentos=false,
+                           SolicitudPlanos=false,Otro=false;
         public static BinaryReader stream=null;
-        String clave = "";              
+        String clave = "",NombreArchivo="";              
         static float TotalPrecio = 0;
         static float duplicados=0;
         static float mul = 0;
@@ -317,6 +321,16 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 
                 cantidad = (int)tn.Rows[d]["NumCopias"];
                 observaciones = tn.Rows[d]["Observaciones"].ToString();
+
+                NombreArchivo = tn.Rows[d]["NombreArchivo"].ToString();
+                RegistroPredio = Convert.ToBoolean(tn.Rows[d]["RegistroPredio"]);
+                SubdivisionPredios = Convert.ToBoolean(tn.Rows[d]["SubdivicionPredio"]);
+                FusionPredio = Convert.ToBoolean(tn.Rows[d]["FusionPredio"]);
+                ExpDocumentos = Convert.ToBoolean(tn.Rows[d]["ExpedicionDocumentos"]);
+                SolicitudPlanos = Convert.ToBoolean(tn.Rows[d]["SolicitudPlanos"]);
+                Otro = Convert.ToBoolean(tn.Rows[d]["Otro"]);
+                
+
                 if (RevCedula == true)
                 {
                     chkRenovacionC.Checked = RevCedula;
@@ -392,6 +406,73 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                 else
                 {
                     txtObservaciones.Text = observaciones;
+                }
+                if (NombreArchivo == null || NombreArchivo == "")
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ArchivoVacio", @"$(function(){
+                                                          $('#valdfil').val(''); 
+                                                         });", true);
+               
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "NombreArchivo", @"$(function(){
+                                                          $('#valdfil').val('" + NombreArchivo + @"'); 
+                                                         });", true);
+                }
+                //RegistroPredio
+                if (RegistroPredio == true)
+                {
+                    chkRegistroPredio.Checked = RegistroPredio;
+                }
+                else
+                {
+                    chkRegistroPredio.Checked = RegistroPredio;
+                }
+                //SubdivisionPredios
+                if (SubdivisionPredios == true)
+                {
+                    chkSubdivicionP.Checked = SubdivisionPredios;
+                }
+                else
+                {
+                    chkSubdivicionP.Checked = SubdivisionPredios;
+                }
+                //Fusion Predio
+                if (FusionPredio == true)
+                {
+                    chkFusionP.Checked = FusionPredio;
+                }
+                else
+                {
+                    chkFusionP.Checked = FusionPredio;
+                }
+                //Expedicion de documentos extraviados
+                if (ExpDocumentos == true)
+                {
+                    chkDocumentosEx.Checked = ExpDocumentos;
+                }
+                else
+                {
+                    chkDocumentosEx.Checked = ExpDocumentos;
+                }
+                //Solicitud de Planos
+                if (SolicitudPlanos == true)
+                {
+                    chkSolicitudP.Checked = SolicitudPlanos;
+                }
+                else
+                {
+                    chkSolicitudP.Checked = SolicitudPlanos;
+                }
+                //Otro
+                if (RegistroPredio == true)
+                {
+                    chkOtro.Checked = SolicitudPlanos;
+                }
+                else
+                {
+                    chkOtro.Checked = SolicitudPlanos;
                 }
             }
             tn.Clear();

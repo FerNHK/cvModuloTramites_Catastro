@@ -489,18 +489,25 @@ namespace cvModuloTramites_Catastro.Data
         }
         public void consultarDenominacion()
         {
-            using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["CatastroConeccion"].ToString()))
+            try
             {
-                conn.Open();
-                comando = new SqlCommand(coneccion.busquedaDenominacion(), conn);
-                comando.Parameters.AddWithValue("@Folio", getFolio());
-                comando.Parameters.AddWithValue("@ClaveCatastral", getClave());
-                daAdaptador = new SqlDataAdapter(comando);
-                
-                DataTable dtDenominacion = new DataTable();
-                daAdaptador.Fill(dtDenominacion);
-                setDatos(dtDenominacion);
-                conn.Close();
+                using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["CatastroConeccion"].ToString()))
+                {
+                    conn.Open();
+                    comando = new SqlCommand(coneccion.busquedaDenominacion(), conn);
+                    comando.Parameters.AddWithValue("@Folio", getFolio());
+                    comando.Parameters.AddWithValue("@ClaveCatastral", getClave());
+                    daAdaptador = new SqlDataAdapter(comando);
+
+                    DataTable dtDenominacion = new DataTable();
+                    daAdaptador.Fill(dtDenominacion);
+                    setDatos(dtDenominacion);
+                    conn.Close();
+                }
+            }
+            catch (SqlException)
+            {
+
             }
         }
         public bool RegistroUsuarioNuevo()

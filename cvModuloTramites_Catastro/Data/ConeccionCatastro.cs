@@ -67,23 +67,29 @@ namespace cvModuloTramites_Catastro.Data
         public String busquedaTramites()
         {
             String action = @"select Tramite.Folio,Tramite.FechaTramite,
-                                     Tramite.Total, Tramite.StatusTramite
-                                from Tramite,Terreno,Contacto
+                                     Tramite.Total, statusTramite.Nombre
+                                from Tramite,Terreno,Contacto,statusTramite
                                where 
                                      Terreno.TERRENOID = Contacto.TerrenoID and
                                      Terreno.TERRENOID = Tramite.TERRENOID and
+                                     Tramite.StatusTramite = statusTramite.StatusTramite and
                                      Terreno.cvecatastral = @ClaveCatastral";
             return action;
         }
 
-        //jhgihgf
+        
         public String busquedaDenominacion()
         {
             String action = @"Select RenovacionCedula,CopiaCertificada,
-		                             CerMedidasColindancia,constanciapropiedad,
-		                             ConstanciaNumero,ConstanciaRegistro,
-		                              Croquis,constanciaNopropiedad,NumCopias ,Tramite.Observaciones
-                                from Tramite 
+	                                 CerMedidasColindancia,constanciapropiedad,
+                                     ConstanciaNumero,ConstanciaRegistro,
+                                     Croquis,constanciaNopropiedad,NumCopias ,Tramite.Observaciones,
+
+                                     Tramite.NombreArchivo, Tramite.RegistroPredio,
+                                     Tramite.SubdivicionPredio, Tramite.FusionPredio,
+                                     Tramite.ExpedicionDocumentos, Tramite.SolicitudPlanos,
+                                     Tramite.Otro
+                                 from Tramite
                                where Tramite.Folio = @Folio  and Tramite.ClaveCatastral = @ClaveCatastral";
             return action;
         }
