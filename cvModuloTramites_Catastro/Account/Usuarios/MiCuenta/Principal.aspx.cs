@@ -268,6 +268,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta
                     string data = gvCustomers.SelectedRow.Cells[0].Text;
                     consultaClave.setFolio(data);
                     llenaDatosDenominacion();
+                    TestLinkButton.Enabled = true;
                     row.BackColor = ColorTranslator.FromHtml("#A1DCF2");
                     row.ToolTip = "Se ha elegido esta el siguiente Folio"+""+data;
                     Page.Title = "Modulo de Tramites | Principal";

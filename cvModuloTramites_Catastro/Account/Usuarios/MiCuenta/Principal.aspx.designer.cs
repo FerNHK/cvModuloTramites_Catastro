@@ -190,7 +190,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGenerarAcuse;
+        protected global::System.Web.UI.WebControls.LinkButton btnGenerarAcuse;
         
         /// <summary>
         /// Control cancelartramite.
@@ -208,7 +208,7 @@ namespace cvModuloTramites_Catastro.Account.Usuarios.MiCuenta {
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelar;
+        protected global::System.Web.UI.WebControls.LinkButton btnCancelar;
         
         /// <summary>
         /// Control MesajeStauts.

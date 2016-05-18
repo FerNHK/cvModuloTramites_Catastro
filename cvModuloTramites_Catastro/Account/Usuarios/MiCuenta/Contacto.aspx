@@ -107,22 +107,33 @@
                        </div>
                       <div class="form-group">
                       <label class="control-label " for="contacto">Nombre de Contacto:</label>
-                             <asp:TextBox 
-                             type="text" data-toggle="validator"  maxlength="20" pattern="^[ A-z0-9]{1,}$"
-                              data-match-error="Este campo es Obligatorio" ID="txtName" 
-                              runat="server" placeholder="Nombre de Contacto"
-                               CssClass="form-control input-error" required=""></asp:TextBox>
-                                <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
-                              <div class="help-block with-errors"></div>
+                            <div class="input-group">
+		    				    <span class="input-group-addon "><span class="glyphicon glyphicon-user"></span></span>
+                                     <asp:TextBox 
+                                     type="text" data-toggle="validator"  maxlength="20" pattern="^[ A-z0-9]{1,}$"
+                                      data-match-error="Este campo es Obligatorio" ID="txtName" 
+                                      runat="server" placeholder="Nombre de Contacto"
+                                       CssClass="form-control input-error" required=""></asp:TextBox>
+                                        <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
+                                      <div class="help-block with-errors"></div>
+                                 </div>
                         </div>
                         <div class="form-group">
                         <label class="control-label " for="email">Email:</label>
-                         <asp:TextBox type="email" data-toggle="validator"  data-match-error="Este direccion de Email es invalida" ID="txtEmail" runat="server" placeholder="Ejemplo: abc@hotmail.com" CssClass="form-control input-error" required=""></asp:TextBox>  <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
+                            <div class="input-group">
+		    				    <span class="input-group-addon "><span class="glyphicon glyphicon-envelope"></span></span>
+                                     <asp:TextBox type="email" data-toggle="validator"  data-match-error="Este direccion de Email es invalida" ID="txtEmail" runat="server" placeholder="Ejemplo: abc@hotmail.com" CssClass="form-control input-error" required=""></asp:TextBox>  <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
+                             </div>
                            <div class="help-block with-errors"></div>
-                           </div>
+                          </div>
                         <div class="form-group">
                         <label class="control-label " for="telefono">Numero de Telefono:</label>
-                        <asp:TextBox type="tel" pattern="[+0-9]{13}"  maxlength="13" data-toggle="validator" data-match-error="El numero de Caracteres debe ser igual a 13" ID="txtTel" runat="server" placeholder="Numero de telefono" CssClass="form-control input-error" required="" data-fv-field="number"></asp:TextBox>
+                        
+                        <div class="input-group">
+		    				    <span class="input-group-addon "><span class="glyphicon glyphicon-phone-alt"></span></span>
+                                     <asp:TextBox type="tel" pattern="[+0-9]{13}"  maxlength="13" data-toggle="validator" data-match-error="El numero de Caracteres debe ser igual a 13" ID="txtTel" runat="server" placeholder="Numero de telefono" CssClass="form-control input-error" required="" data-fv-field="number"></asp:TextBox>
+                        </div>
+                        
                         <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
                           <div class="help-block with-errors"></div>
                             </div>
@@ -146,9 +157,9 @@
                 </div>
                          <div class="row">
                           <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
-                                 <span class="file-input centrado">Buscar Archivo… </span>
+                                 
 
-                                  <div class="input-group">
+                                  <div class="input-group" style="color:white; border-color: #101010; background: #4aaf51;     height: 40px;">
                                         <span class="input-group-btn">
                                             <span class=" input-group-addon btn btn-warning btn-file" style="color:white; border-color: #101010; background: #4aaf51;     height: 40px;">
                                                  <span class=""  >Archivo
@@ -157,7 +168,7 @@
                                      
                                             </span>
                                         </span>
-                                        <input type="text" placeholder="No se ha seleccionado un archivo" id="valdfil" class="form-control" disabled="disabled" readonly />
+                                        <input type="text" placeholder="No se ha seleccionado un archivo" id="valdfil" class="form-control" disabled="disabled" readonly style=" border-color: #101010; background: #4aaf51;     height: 40px;" />
                                     </div>
                                            <asp:RegularExpressionValidator
                                                 id="RegularExpressionValidator1" runat="server"
@@ -170,11 +181,7 @@
                               
                             </div>
                          </div>
-                          <span class="file-input centrado">Buscar Archivo… </span>
-                                <div class="editor-label">
-                                    <label>Fil</label>
-                                   
-                                </div>
+                          
 
                      </div>
                          <div class="form-group">

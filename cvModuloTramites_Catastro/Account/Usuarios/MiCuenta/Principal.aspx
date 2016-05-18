@@ -103,7 +103,7 @@ EnableEventValidation="false" %>
         <div class="col-sm-5 col-md-4  col-xs-12 col-lg-4 ">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title centrado ">Datos Generales del Predio</h3>
+              <h3 class="panel-title centrado ">Datos Generales del Predio <span class="glyphicon glyphicon-search"></span></h3>
             </div>
             <div class="panel-body">
              	<div class="row centrado" >
@@ -151,7 +151,7 @@ EnableEventValidation="false" %>
         <div class=" col-sm-7 col-md-8 col-xs-12 ">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title centrado">Datos del Propietario</h3>
+              <h3 class="panel-title centrado">Datos del Propietario <span class="glyphicon glyphicon-search"></span></h3>
             </div>
             <div class="panel-body">
               <div class="row centrado ">
@@ -216,7 +216,7 @@ EnableEventValidation="false" %>
        
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title centrado">Tabla de Tramites Realizados</h3>
+              <h3 class="panel-title centrado">Tabla de Tramites Realizados <span class="glyphicon glyphicon-search"></span></h3>
             </div>
             <div class="panel-body">       	
                <div class="scrolling-table-container" >
@@ -251,13 +251,14 @@ EnableEventValidation="false" %>
                <br />
                <div class="row centrado">
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                 <button type="button"  class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModal">Nuevo</button>
+                 <button id="btnNuevo" type="button"  class="btn btn-lg" data-toggle="modal" data-target="#myModal">Nuevo <span class="glyphicon glyphicon-list-alt"></span></button>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <asp:UpdatePanel ID="genAcuse" runat="server">
                     <ContentTemplate>
-                     <asp:Button ID="btnGenerarAcuse" class="btn btn-lg btn-info" 
-                                runat="server"  Text="Imprimir" OnClick="btnGenerarAcuse_clicklistener" ToolTip="Generar acuse"  />
+                    
+                     <asp:LinkButton ID="btnGenerarAcuse" class="btn btn-lg btn-primary" runat="server"   OnClick="btnGenerarAcuse_clicklistener"  >Imprimir<span class="glyphicon glyphicon-print"></span></asp:LinkButton>                          
+                                      
                      </ContentTemplate>
                      <Triggers>
                           <asp:PostBackTrigger  ControlID="btnGenerarAcuse" />
@@ -267,8 +268,9 @@ EnableEventValidation="false" %>
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4"> 
                  <asp:UpdatePanel ID="cancelartramite" runat="server">
                     <ContentTemplate>
-                 <asp:Button ID="btnCancelar" class="btn btn-lg btn-danger" 
-                            runat="server"  Text="Cancelar" OnClick="btnCancelar_clicklistener" ToolTip="Cancelar Tramite" />
+                 
+                    <asp:LinkButton ID="btnCancelar" CssClass="btn btn-lg btn-primary" runat="server"  OnClick="btnCancelar_clicklistener"  >Cancelar<span class="glyphicon glyphicon-alert"></span></asp:LinkButton>                          
+                     
                               </ContentTemplate>
                      <Triggers>
                          <asp:AsyncPostBackTrigger ControlID="btnCancelar" />
@@ -285,7 +287,7 @@ EnableEventValidation="false" %>
         <div class="col-sm-5 col-md-5 ">
           <div class="panel panel-primary">
             <div class="panel-heading">
-              <h3 class="panel-title centrado">Denominación del Tramite</h3>
+              <h3 class="panel-title centrado">Denominación del Tramite <span class="glyphicon glyphicon-search"></span></h3>
             </div>
             <div class="panel-body">
                <div class="row" >
@@ -455,10 +457,9 @@ EnableEventValidation="false" %>
                     <asp:UpdatePanel ID="actFile" runat="server" >
                         <ContentTemplate> 
                            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
-                                <span class="file-input centrado">Buscar Archivo… </span>
+                               
 
-
-                                <div class="input-group">
+                                <div id="elevation" class="input-group">
                                         <span class="input-group-btn">
                                             <span class=" input-group-addon btn btn-info btn-file" style="color:white; border-color: #101010;      height: 40px;">
                                                  <span class=""  >Archivo
@@ -467,7 +468,7 @@ EnableEventValidation="false" %>
                                                       </span>
                                         </span>
                                         <input type="text" placeholder="No se ha seleccionado un archivo" id="valdfil" class="form-control" disabled="disabled" style="border-color: #101010; overflow:hidden;" readonly />
-                                         <asp:LinkButton ID="TestLinkButton" CssClass="input-group-addon btn btn-info" runat="server" style="color:white; border-color: #101010; background: #4aaf51;"  OnClick="btnActualizarArchivo_Click"  >ENVIAR</asp:LinkButton>                          
+                                         <asp:LinkButton ID="TestLinkButton" CssClass="input-group-addon btn btn-info" runat="server" style="color:white; border-color: #101010; background: #4aaf51;"  OnClick="btnActualizarArchivo_Click"  Enabled = "false"  >ENVIAR<span class="glyphicon glyphicon-send"></span></asp:LinkButton>                          
                                       
                                     </div>
                                            <asp:RegularExpressionValidator
@@ -781,17 +782,26 @@ EnableEventValidation="false" %>
            <ContentTemplate>  
                   <div class="form-group">
                       <label class="control-label " for="contacto">Nombre de Contacto:</label>
-                      <asp:TextBox  ID="txtedit_NombreContacto" maxlength="20" pattern="^[ A-z0-9]{1,}$" type="text" data-toggle="validator" data-match-error="Este campo es Obligatorio" runat="server" placeholder="Nombre de Contacto" CssClass="form-control input-error" required=""></asp:TextBox>  <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
+                       <div class="input-group">
+		    				    <span class="input-group-addon "><span class="glyphicon glyphicon-user"></span></span>
+                                    <asp:TextBox  ID="txtedit_NombreContacto" maxlength="20" pattern="^[ A-z0-9]{1,}$" type="text" data-toggle="validator" data-match-error="Este campo es Obligatorio" runat="server" placeholder="Nombre de Contacto" CssClass="form-control input-error" required=""></asp:TextBox>  <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
+                       </div> 
                       <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group">
                       <label class="control-label " for="email">Email:</label>
-                      <asp:TextBox ID="txtedit_Email" type="email" data-toggle="validator"  data-match-error="Este direccion de Email es invalida"  runat="server" placeholder="Ejemplo: abc@hotmail.com" CssClass="form-control input-error" required=""></asp:TextBox>  <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
+                      <div class="input-group">
+		    				    <span class="input-group-addon "><span class="glyphicon glyphicon-envelope"></span></span>
+                                    <asp:TextBox ID="txtedit_Email" type="email" data-toggle="validator"  data-match-error="Este direccion de Email es invalida"  runat="server" placeholder="Ejemplo: abc@hotmail.com" CssClass="form-control input-error" required=""></asp:TextBox>  <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
+                     </div>
                       <div class="help-block with-errors"></div>
                     </div>
                     <div class="form-group">
                           <label class="control-label " for="telefono">Telefono:</label>
-                          <asp:TextBox ID="txtedit_NumeroTelefono" type="text"  pattern="[+0-9]{13}"  maxlength="13" data-toggle="validator"  data-match-error="El numero de Caracteres debe ser igual a 13"  runat="server" placeholder="Ejemplo: +52 9831234567" CssClass="form-control input-error" required="" ></asp:TextBox>                     
+                          <div class="input-group">
+		    				    <span class="input-group-addon "><span class="	glyphicon glyphicon-earphone"></span></span>
+                                      <asp:TextBox ID="txtedit_NumeroTelefono" type="text"  pattern="[+0-9]{13}"  maxlength="13" data-toggle="validator"  data-match-error="El numero de Caracteres debe ser igual a 13"  runat="server" placeholder="Ejemplo: +52 9831234567" CssClass="form-control input-error" required="" ></asp:TextBox>                     
+                          </div>
                           <i class="form-control-feedback" data-fv-icon-for="number" style="display: none;"></i>
                           <div class="help-block with-errors"></div>
                     </div>
