@@ -4,7 +4,7 @@
 <html>
 <head runat="server">
 <title>Modulo de Tramites | <%: Page.Title %></title> 
-<link rel="shortcut icon" href="Styles/assets/ico/favicon.png"> 
+<link rel="shortcut icon" href="Styles/assets/ico/favicon.ico"> 
     
     <asp:ContentPlaceHolder ID="HeadContent" runat="server">
     </asp:ContentPlaceHolder>

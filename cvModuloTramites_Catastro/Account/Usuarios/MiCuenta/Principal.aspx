@@ -212,7 +212,7 @@ EnableEventValidation="false" %>
 
       <div class="row">
        
-        <div class="col-sm-7 col-md-7 ">
+        <div class="col-sm-6 col-md-6 ">
        
           <div class="panel panel-primary">
             <div class="panel-heading">
@@ -284,7 +284,7 @@ EnableEventValidation="false" %>
              </div>
           </div>
         </div>
-        <div class="col-sm-5 col-md-5 ">
+        <div class="col-sm-6 col-md-6 ">
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title centrado">Denominación del Tramite <span class="glyphicon glyphicon-search"></span></h3>
